@@ -1,4 +1,5 @@
 ﻿using api.Domain.Enums;
+using api.Domain.ValueObjects;
 
 namespace api.Domain.Entities
 {
@@ -11,6 +12,8 @@ namespace api.Domain.Entities
         public AttendeeType Type { get; private set; }
         public string AdditionalInfo { get; private set; }
 
+        public List<Event> Events { get; private set; }
+
         public Attendee(string name, string identificationNumber, PaymentMethod paymentMethod, AttendeeType type, string additionalInfo)
         {
             AttendeeId = Guid.NewGuid();
@@ -21,6 +24,8 @@ namespace api.Domain.Entities
             AdditionalInfo = additionalInfo;
         }
 
+        public Attendee() { }
+
         public void UpdateAttendee(string name, string identificationNumber, PaymentMethod paymentMethod, string additionalInfo)
         {
             Name = name;
@@ -29,4 +34,6 @@ namespace api.Domain.Entities
             AdditionalInfo = additionalInfo;
         }
     }
+
+  
 }

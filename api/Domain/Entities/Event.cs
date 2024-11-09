@@ -22,13 +22,11 @@
             Attendees = new List<Attendee>();
         }
 
-        // Business method to add an attendee to the event
         public void AddAttendee(Attendee attendee)
         {
             Attendees.Add(attendee);
         }
 
-        // Method to update event details
         public void UpdateEvent(string name, DateTime date, string location, string additionalInfo)
         {
             if (date <= DateTime.Now)
@@ -40,7 +38,6 @@
             AdditionalInfo = additionalInfo;
         }
 
-        // Method to remove an attendee
         public void RemoveAttendee(Attendee attendee)
         {
             Attendees.Remove(attendee);

@@ -1,25 +1,29 @@
-﻿public class PaymentMethod
+﻿namespace api.Domain.ValueObjects
 {
-    public string Method { get; private set; }
-
-    private static readonly List<string> ValidMethods = new List<string> { "BankTransfer", "Cash" };
-
-    public PaymentMethod(string method)
+    public class PaymentMethod
     {
-        if (!ValidMethods.Contains(method))
-            throw new ArgumentException("Invalid payment method.");
+        public PaymentMethod() { }
+        public string Method { get; private set; }
 
-        Method = method;
-    }
+        private static readonly List<string> ValidMethods = new List<string> { "BankTransfer", "Cash" };
 
-    public override bool Equals(object obj)
-    {
-        if (obj is PaymentMethod other)
+        public PaymentMethod(string method)
         {
-            return Method == other.Method;
-        }
-        return false;
-    }
+            if (!ValidMethods.Contains(method))
+                throw new ArgumentException("Invalid payment method.");
 
-    public override int GetHashCode() => Method.GetHashCode();
+            Method = method;
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is PaymentMethod other)
+            {
+                return Method == other.Method;
+            }
+            return false;
+        }
+
+        public override int GetHashCode() => Method.GetHashCode();
+    }
 }
