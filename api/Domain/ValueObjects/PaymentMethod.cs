@@ -3,7 +3,7 @@
     public class PaymentMethod
     {
         public PaymentMethod() { }
-        public string Method { get; private set; }
+        public string Method { get; private set; } = string.Empty;
 
         private static readonly List<string> ValidMethods = new List<string> { "BankTransfer", "Cash" };
 

@@ -13,6 +13,15 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Attendee>()
+                .HasDiscriminator<string>("AttendeeType")
+                .HasValue<NaturalPersonAttendee>("NaturalPerson")
+                .HasValue<LegalEntityAttendee>("LegalEntity");
+
+        modelBuilder.Entity<Attendee>()
+            .Property("AttendeeType")
+            .HasMaxLength(50);
+
+        modelBuilder.Entity<Attendee>()
             .OwnsOne(a => a.PaymentMethod);
 
         base.OnModelCreating(modelBuilder);
