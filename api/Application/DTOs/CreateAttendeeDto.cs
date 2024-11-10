@@ -1,11 +1,13 @@
 ﻿using api.Domain.Enums;
 using api.Domain.ValueObjects;
+using System.Text.Json.Serialization;
 
 namespace api.Application.DTOs
 {
     public class CreateAttendeeDto
     {
         public string Name { get; set; } = string.Empty;
+        [JsonConverter(typeof(PaymentMethodConverter))]
         public PaymentMethod PaymentMethod { get; set; }
         public string AdditionalInfo { get; set; } = string.Empty;
         public string ParticipantRequests { get; set; } = string.Empty;

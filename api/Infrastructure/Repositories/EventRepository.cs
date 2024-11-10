@@ -14,21 +14,21 @@ public class EventRepository : IEventRepository
     public async Task<Event> GetByIdAsync(Guid eventId)
     {
         return await _context.Events
-            .Include(e => e.Attendees)
+            .Include(e => e.EventAttendees).ThenInclude(e => e.Attendee)
             .FirstOrDefaultAsync(e => e.EventId == eventId);
     }
 
     public async Task<IEnumerable<Event>> GetAllAsync()
     {
         return await _context.Events
-            .Include(e => e.Attendees)
+            .Include(e => e.EventAttendees)
             .ToListAsync();
     }
 
     public async Task<IEnumerable<Event>> GetUpcomingEventsAsync()
     {
         return await _context.Events
-            .Include(e => e.Attendees)
+            .Include(e => e.EventAttendees)
             .Where(e => e.Date > DateTime.Now)
             .ToListAsync();
     }
@@ -36,7 +36,7 @@ public class EventRepository : IEventRepository
     public async Task<IEnumerable<Event>> GetPastEventsAsync()
     {
         return await _context.Events
-            .Include(e => e.Attendees)
+            .Include(e => e.EventAttendees)
             .Where(e => e.Date <= DateTime.Now)
             .ToListAsync();
     }

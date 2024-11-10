@@ -12,7 +12,9 @@ namespace api.Domain.Entities
         public PaymentMethod PaymentMethod { get; protected set; }
         public string AdditionalInfo { get; protected set; } // Up to 1500 characters
         public string ParticipantRequests { get; protected set; } // Up to 5000 characters
-        public List<Event> Events { get; private set; } = new List<Event>();
+        private readonly List<EventAttendee> _eventAttendees = new List<EventAttendee>();
+        public IReadOnlyCollection<EventAttendee> EventAttendees => _eventAttendees.AsReadOnly();
+
 
         protected Attendee() { } 
 

@@ -7,7 +7,8 @@
         public DateTime Date { get; private set; }
         public string Location { get; private set; }
         public string AdditionalInfo { get; private set; }
-        public List<Attendee> Attendees { get; private set; }
+        private readonly List<EventAttendee> _eventAttendees = new List<EventAttendee>();
+        public IReadOnlyCollection<EventAttendee> EventAttendees => _eventAttendees.AsReadOnly();
 
         public Event(string name, DateTime date, string location, string additionalInfo)
         {
@@ -19,12 +20,17 @@
             Date = date;
             Location = location;
             AdditionalInfo = additionalInfo;
-            Attendees = new List<Attendee>();
         }
 
         public void AddAttendee(Attendee attendee)
         {
-            Attendees.Add(attendee);
+            var eventAttendee = new EventAttendee(this, attendee);
+            _eventAttendees.Add(eventAttendee);
+        }
+
+        public void RemoveAttendee(Attendee attendee)
+        {
+            _eventAttendees.RemoveAll(ea => ea.AttendeeId == attendee.AttendeeId);
         }
 
         public void UpdateEvent(string name, DateTime date, string location, string additionalInfo)
@@ -38,9 +44,6 @@
             AdditionalInfo = additionalInfo;
         }
 
-        public void RemoveAttendee(Attendee attendee)
-        {
-            Attendees.Remove(attendee);
-        }
+        
     }
 }

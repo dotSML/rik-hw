@@ -14,21 +14,21 @@ public class AttendeeService : IAttendeeService
     }
 
     // Create a new attendee for a given event
-    public async Task<Guid> CreateAttendeeAsync(Guid eventId, CreateAttendeeDto dto)
+    public async Task<Guid> CreateAttendeeAsync(Guid eventId, Attendee attendee)
     {
         // Check if the event exists using EventService
         if (!await _eventService.EventExistsAsync(eventId))
         {
             throw new ArgumentException("Event does not exist", nameof(eventId));
         }
-        
-        
 
-        await _attendeeRepository.AddAsync(attendee);
-        return attendee.AttendeeId;
+        var newAttendee = await _attendeeRepository.AddAsync(attendee);
+
+        await _eventService.AddAttendeeToEventAsync(eventId, newAttendee);
+
+        return newAttendee.AttendeeId;
     }
 
-    // Retrieve all attendees for a specific event (optional if already handled in EventService)
     public async Task<IEnumerable<AttendeeDto>> GetAttendeesForEventAsync(Guid eventId)
     {
         if (!await _eventService.EventExistsAsync(eventId))
@@ -37,7 +37,7 @@ public class AttendeeService : IAttendeeService
         }
 
         var attendees = await _eventService.GetAttendeesForEventAsync(eventId);
-        return attendees.Select(a => new AttendeeDto(a)).ToList();
+        return attendees.Select(a => new AttendeeDto(a));
     }
 
     public async Task<AttendeeDto> GetByIdAsync(Guid attendeeId)

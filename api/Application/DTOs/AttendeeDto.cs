@@ -37,7 +37,9 @@ namespace api.Application.DTOs
                 AttendeeCount = legalEntity.AttendeeCount;
             }
 
-            Events = attendee.Events.Select(e => new EventDto(e)).ToList();
+            Events = attendee.EventAttendees
+                        .Select(ea => new EventDto(ea.Event))
+                        .ToList();
         }
     }
 }

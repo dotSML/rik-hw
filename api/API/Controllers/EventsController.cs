@@ -18,7 +18,9 @@ namespace api.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] CreateEventDto dto)
         {
+            Console.WriteLine(dto);
             var eventId = await _eventService.CreateEventAsync(dto);
+
             return Ok(eventId);
         }
 

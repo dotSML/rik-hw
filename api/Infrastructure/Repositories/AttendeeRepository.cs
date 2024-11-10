@@ -12,7 +12,7 @@ public class AttendeeRepository : IAttendeeRepository
 
     public async Task<Attendee> GetByIdAsync(Guid attendeeId)
     {
-        return await _context.Attendees.FindAsync(attendeeId);
+        return await _context.Attendees.Include(e => e.EventAttendees).SingleOrDefaultAsync(x => x.AttendeeId == attendeeId);
     }
 
     public async Task<IEnumerable<Attendee>> GetAllAsync()
@@ -23,14 +23,16 @@ public class AttendeeRepository : IAttendeeRepository
     public async Task<IEnumerable<Attendee>> GetByEventIdAsync(Guid eventId)
     {
         return await _context.Attendees
-            .Where(a => a.Events.Any(e => e.EventId == eventId))
+            .Where(a => a.EventAttendees.Any(e => e.EventId == eventId))
             .ToListAsync();
     }
 
-    public async Task AddAsync(Attendee attendee)
+    public async Task<Attendee> AddAsync(Attendee attendee)
     {
-        await _context.Attendees.AddAsync(attendee);
+        var addedAttendee = await _context.Attendees.AddAsync(attendee);
         await _context.SaveChangesAsync();
+
+        return addedAttendee.Entity;
     }
 
     public async Task UpdateAsync(Attendee attendee)
