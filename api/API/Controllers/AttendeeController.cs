@@ -17,7 +17,7 @@ namespace api.API.Controllers
         public async Task<IActionResult> GetAttendeeById([FromRoute] Guid id)
         {
             var attendeeDto = await _attendeeService.GetByIdAsync(id);
-            return attendeeDto != null ? Ok(attendeeDto) : NotFound();
+            return Ok(attendeeDto);
         }
 
         [HttpGet("event/{eventId}")]
@@ -30,8 +30,7 @@ namespace api.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAttendee(Guid eventId, [FromBody] CreateAttendeeDto dto)
         {
-            Console.WriteLine("PaymentMethod.Method: " + dto.PaymentMethod?.Method);
-            var attendeeId = await _attendeeService.CreateAttendeeAsync(eventId, dto.ToAttendeeFromCreate());
+            var attendeeId = await _attendeeService.CreateAttendeeAsync(eventId, dto);
             return Ok(attendeeId);
         }
     }

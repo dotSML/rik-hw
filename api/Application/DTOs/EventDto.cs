@@ -10,6 +10,10 @@ namespace api.Application.DTOs
         public string Location { get; set; }
         public string AdditionalInfo { get; set; }
 
+        public EventDto()
+        {
+        }
+
         public EventDto(Event eventEntity)
         {
             EventId = eventEntity.EventId;

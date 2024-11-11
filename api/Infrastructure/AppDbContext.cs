@@ -1,5 +1,7 @@
 ﻿using api.Domain.Entities;
+using api.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public class AppDbContext : DbContext
 {
@@ -13,14 +15,20 @@ public class AppDbContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        var attendeeTypeConverter = new ValueConverter<AttendeeType, string>(
+        v => v.ToString(), // Convert AttendeeType to string for storage
+        v => (AttendeeType)Enum.Parse(typeof(AttendeeType), v) // Convert string back to AttendeeType
+    );
+
+
         modelBuilder.Entity<Attendee>()
-                .HasDiscriminator<string>("AttendeeType")
-                .HasValue<NaturalPersonAttendee>("NaturalPerson")
-                .HasValue<LegalEntityAttendee>("LegalEntity");
+            .HasDiscriminator<AttendeeType>("AttendeeType")
+            .HasValue<NaturalPersonAttendee>(AttendeeType.NaturalPerson)
+            .HasValue<LegalEntityAttendee>(AttendeeType.LegalEntity);
 
         modelBuilder.Entity<Attendee>()
             .Property("AttendeeType")
-            .HasMaxLength(50);
+            .HasConversion<string>(); 
 
         modelBuilder.Entity<Attendee>()
             .OwnsOne(a => a.PaymentMethod);

@@ -1,4 +1,6 @@
 ﻿using api.Application.DTOs;
+using api.Application.Helpers;
+using api.Application.Mappers;
 using api.Domain.Entities;
 using api.Domain.Repositories;
 using api.Domain.Services;
@@ -14,12 +16,6 @@ namespace api.Application.Services
             _eventRepository = eventRepository;
         }
 
-        public async Task<IEnumerable<Attendee>> GetAttendeesForEventAsync(Guid eventId)
-        {
-            var eventEntity = await _eventRepository.GetByIdAsync(eventId);
-            return eventEntity.EventAttendees.Select(e => e.Attendee).ToList();
-        }
-
         public async Task<Guid> CreateEventAsync(CreateEventDto dto)
         {
             var newEvent = new Event(dto.Name, dto.Date, dto.Location, dto.AdditionalInfo);
@@ -27,10 +23,11 @@ namespace api.Application.Services
             return newEvent.EventId;
         }
 
-        public async Task<EventDto> GetEventByIdAsync(Guid eventId)
+        public async Task<EventDto?> GetEventByIdAsync(Guid eventId)
         {
             var eventEntity = await _eventRepository.GetByIdAsync(eventId);
-            return new EventDto(eventEntity);
+
+            return eventEntity != null ? eventEntity.ToDto() : null;
         }
 
         public async Task<IEnumerable<EventDto>> GetAllEventsAsync()
@@ -39,20 +36,18 @@ namespace api.Application.Services
             return events.Select(e => new EventDto(e)).ToList();
         }
 
-        public async Task AddAttendeeToEventAsync(Guid eventId, Attendee attendee)
+        public async Task AddAttendeeToEventAsync(Guid eventId, Guid attendeeId)
         {
-            // Retrieve the event from the repository
-            var @event = await _eventRepository.GetByIdAsync(eventId);
-    if (@event == null)
-    {
-            throw new ArgumentException("Event does not exist", nameof(eventId));
-        }
+            var eventDto = await GetEventByIdAsync(eventId);
 
-    // Add the attendee to the event
-    @event.AddAttendee(attendee);
+            AssertionHelper.AssertExistsAndOfType<EventDto>(eventDto);
 
-    // Save changes to the repositorys
-    await _eventRepository.UpdateAsync(@event);
+            var eventEntity = eventDto.ToEvent();
+
+            eventEntity?.AddAttendee(attendeeId);
+
+
+            await _eventRepository.UpdateAsync(eventEntity);
         }
 
         public async Task<bool> EventExistsAsync(Guid eventId)
@@ -60,5 +55,8 @@ namespace api.Application.Services
             var eventEntity = await _eventRepository.GetByIdAsync(eventId);
             return eventEntity != null;
         }
+
+        
     }
-}
+
+    }

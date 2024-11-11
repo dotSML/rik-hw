@@ -22,9 +22,9 @@
             AdditionalInfo = additionalInfo;
         }
 
-        public void AddAttendee(Attendee attendee)
+        public void AddAttendee(Guid attendeeId)
         {
-            var eventAttendee = new EventAttendee(this, attendee);
+            var eventAttendee = new EventAttendee(this.EventId, attendeeId);
             _eventAttendees.Add(eventAttendee);
         }
 

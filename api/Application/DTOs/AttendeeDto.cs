@@ -18,6 +18,11 @@ namespace api.Application.DTOs
         public AttendeeType Type { get; set; }
         public List<EventDto> Events { get; set; } = new List<EventDto>();
 
+        public AttendeeDto()
+        {
+
+        }
+
         public AttendeeDto(Attendee attendee)
         {
             Id = attendee.AttendeeId;
@@ -25,6 +30,12 @@ namespace api.Application.DTOs
             PaymentMethod = attendee.PaymentMethod;
             AdditionalInfo = attendee.AdditionalInfo;
             ParticipantRequests = attendee.ParticipantRequests;
+            Type = attendee switch
+            {
+                NaturalPersonAttendee => AttendeeType.NaturalPerson,
+                LegalEntityAttendee => AttendeeType.LegalEntity,
+                _ => throw new ArgumentException("Invalid attendee type")
+            };
 
             if (attendee is NaturalPersonAttendee naturalPerson)
             {

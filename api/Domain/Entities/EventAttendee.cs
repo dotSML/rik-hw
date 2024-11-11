@@ -7,14 +7,15 @@
         public Guid AttendeeId { get; private set; }
         public Attendee Attendee { get; private set; }
 
+        public DateTime RegistrationDate { get; private set; }
+
         private EventAttendee() { } 
 
-        public EventAttendee(Event @event, Attendee attendee)
+        public EventAttendee(Guid eventId, Guid attendeeId)
         {
-        EventId = @event.EventId;
-        Event = @event;
-        AttendeeId = attendee.AttendeeId;
-        Attendee = attendee;
+            EventId = eventId;
+        AttendeeId = attendeeId;
+        RegistrationDate = DateTime.UtcNow;
         }
     }
 }

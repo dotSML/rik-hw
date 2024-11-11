@@ -10,7 +10,7 @@ public static class AttendeeMapper
         {
             AttendeeType.NaturalPerson => new NaturalPersonAttendee(
                 dto.Name,
-                dto.PersonalIdCode,       
+                dto.PersonalIdCode,
                 dto.PaymentMethod,
                 dto.AdditionalInfo,
                 dto.ParticipantRequests
@@ -24,6 +24,18 @@ public static class AttendeeMapper
                 dto.ParticipantRequests
             ),
             _ => throw new ArgumentException("Invalid attendee type")
+        };
+    }
+
+    public static AttendeeDto ToDto(this Attendee attendee)
+    {
+        return new AttendeeDto
+        {
+            Id = attendee.AttendeeId,
+            Name = attendee.Name,
+            PaymentMethod = attendee.PaymentMethod,
+            AdditionalInfo = attendee.AdditionalInfo,
+            ParticipantRequests = attendee.ParticipantRequests
         };
     }
 }

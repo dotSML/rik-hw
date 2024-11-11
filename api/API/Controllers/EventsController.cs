@@ -18,14 +18,13 @@ namespace api.API.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateEvent([FromBody] CreateEventDto dto)
         {
-            Console.WriteLine(dto);
             var eventId = await _eventService.CreateEventAsync(dto);
 
             return Ok(eventId);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetEventById(Guid id)
+        public async Task<IActionResult> GetEventById([FromRoute] Guid id)
         {
             var eventDto = await _eventService.GetEventByIdAsync(id);
             return eventDto != null ? Ok(eventDto) : NotFound();
