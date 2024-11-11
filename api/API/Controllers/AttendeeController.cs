@@ -6,7 +6,7 @@ namespace api.API.Controllers
 {
     [ApiController]
     [Route("api/attendees")]
-    public class AttendeeController: ControllerBase
+    public class AttendeeController : ControllerBase
     {
         private readonly IAttendeeService _attendeeService;
         public AttendeeController(IAttendeeService attendeeService)
@@ -34,11 +34,12 @@ namespace api.API.Controllers
             {
                 var attendeeId = await _attendeeService.CreateAttendeeAsync(eventId, dto);
                 return Ok(attendeeId);
-            } catch
+            }
+            catch
             {
                 return BadRequest();
             }
-            
+
         }
     }
 }

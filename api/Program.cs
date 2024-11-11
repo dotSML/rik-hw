@@ -1,9 +1,5 @@
 using api.Application;
-using api.Application.Services;
-using api.Domain.Repositories;
-using api.Domain.Services;
 using api.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);

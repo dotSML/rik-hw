@@ -9,13 +9,13 @@
 
         public DateTime RegistrationDate { get; private set; }
 
-        private EventAttendee() { } 
+        private EventAttendee() { }
 
         public EventAttendee(Guid eventId, Guid attendeeId)
         {
             EventId = eventId;
-        AttendeeId = attendeeId;
-        RegistrationDate = DateTime.UtcNow;
+            AttendeeId = attendeeId;
+            RegistrationDate = DateTime.UtcNow;
         }
     }
 }

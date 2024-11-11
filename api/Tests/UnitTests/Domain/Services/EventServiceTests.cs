@@ -1,10 +1,10 @@
 ﻿using api.Application.DTOs;
-using Xunit;
+using api.Application.Mappers;
 using api.Application.Services;
+using api.Domain.Entities;
 using api.Domain.Repositories;
 using Moq;
-using api.Domain.Entities;
-using api.Application.Mappers;
+using Xunit;
 
 namespace Tests.UnitTests.Domain.Services
 {

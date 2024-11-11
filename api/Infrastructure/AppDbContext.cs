@@ -28,7 +28,7 @@ public class AppDbContext : DbContext
 
         modelBuilder.Entity<Attendee>()
             .Property("AttendeeType")
-            .HasConversion<string>(); 
+            .HasConversion<string>();
 
         modelBuilder.Entity<Attendee>()
             .OwnsOne(a => a.PaymentMethod);

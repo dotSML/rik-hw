@@ -1,6 +1,5 @@
 ﻿using api.Application.Services;
 using api.Domain.Services;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace api.Application
 {

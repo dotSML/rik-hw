@@ -6,7 +6,6 @@ namespace api.Application.Interfaces
     {
         IAttendeeRepository AttendeeRepository { get; }
         IEventRepository EventRepository { get; }
-
         Task BeginTransactionAsync();
         Task CommitTransactionAsync();
         Task RollbackTransactionAsync();

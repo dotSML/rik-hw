@@ -14,7 +14,7 @@ public class AttendeeService : IAttendeeService
     {
         _attendeeRepository = attendeeRepository;
         _eventService = eventService;
-       _unitOfWork = unitOfWork;
+        _unitOfWork = unitOfWork;
     }
 
     public async Task<Guid> CreateAttendeeAsync(Guid eventId, CreateAttendeeDto dto)
@@ -33,7 +33,7 @@ public class AttendeeService : IAttendeeService
 
             return newAttendee.AttendeeId;
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             await _unitOfWork.RollbackTransactionAsync();
             throw;

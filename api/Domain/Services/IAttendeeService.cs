@@ -1,6 +1,5 @@
 ﻿
 using api.Application.DTOs;
-using api.Domain.Entities;
 
 public interface IAttendeeService
 {

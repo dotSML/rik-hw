@@ -14,7 +14,7 @@ public class PaymentMethodConverter : JsonConverter<PaymentMethod>
         if (reader.TokenType != JsonTokenType.PropertyName || reader.GetString() != "method")
             throw new JsonException("Expected 'method' property");
 
-        reader.Read(); 
+        reader.Read();
 
         var method = reader.GetString();
 

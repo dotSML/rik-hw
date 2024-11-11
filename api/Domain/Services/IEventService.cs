@@ -1,5 +1,4 @@
 ﻿using api.Application.DTOs;
-using api.Domain.Entities;
 
 namespace api.Domain.Services
 {

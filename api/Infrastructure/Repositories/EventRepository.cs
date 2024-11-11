@@ -45,22 +45,22 @@ public class EventRepository : IEventRepository
     public async Task AddAsync(Event eventEntity)
     {
         await _context.Events.AddAsync(eventEntity);
-    await _context.SaveChangesAsync();
-    }
-
-public async Task UpdateAsync(Event eventEntity)
-{
-    _context.Events.Update(eventEntity);
-    await _context.SaveChangesAsync();
-}
-
-public async Task DeleteAsync(Guid eventEntityId)
-{
-    var eventEntityEntity = await GetByIdAsync(eventEntityId);
-    if (eventEntityEntity != null)
-        {
-        _context.Events.Remove(eventEntityEntity);
         await _context.SaveChangesAsync();
     }
-}
+
+    public async Task UpdateAsync(Event eventEntity)
+    {
+        _context.Events.Update(eventEntity);
+        await _context.SaveChangesAsync();
+    }
+
+    public async Task DeleteAsync(Guid eventEntityId)
+    {
+        var eventEntityEntity = await GetByIdAsync(eventEntityId);
+        if (eventEntityEntity != null)
+        {
+            _context.Events.Remove(eventEntityEntity);
+            await _context.SaveChangesAsync();
+        }
+    }
 }

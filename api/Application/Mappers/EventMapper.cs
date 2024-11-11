@@ -20,7 +20,7 @@ namespace api.Application.Mappers
                 Date = DateTime.SpecifyKind(entity.Date, DateTimeKind.Utc),
                 Location = entity.Location,
                 AdditionalInfo = entity.AdditionalInfo,
-                
+
             };
         }
     }
