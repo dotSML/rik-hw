@@ -11,5 +11,5 @@ namespace api.Domain.Repositories
         Task AddAsync(Event eventEntity);
         Task UpdateAsync(Event eventEntity);
         Task DeleteAsync(Guid eventId);
-}
+    }
 }

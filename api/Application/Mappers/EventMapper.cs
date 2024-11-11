@@ -5,7 +5,7 @@ namespace api.Application.Mappers
 {
     public static class EventMapper
     {
-        public static Event ToEvent(this EventDto dto)
+        public static Event ToEntity(this EventDto dto)
         {
             return new Event(dto.Name, dto.Date, dto.Location, dto.AdditionalInfo);
         }

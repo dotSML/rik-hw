@@ -1,4 +1,5 @@
-﻿using api.Domain.Entities;
+﻿using api.Application.Interfaces;
+using api.Domain.Entities;
 
 public interface IAttendeeRepository
 {

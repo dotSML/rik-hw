@@ -17,21 +17,29 @@ namespace api.API.Controllers
         public async Task<IActionResult> GetAttendeeById([FromRoute] Guid id)
         {
             var attendeeDto = await _attendeeService.GetByIdAsync(id);
-            return Ok(attendeeDto);
+            return attendeeDto != null ? Ok(attendeeDto) : NotFound();
         }
 
         [HttpGet("event/{eventId}")]
         public async Task<IActionResult> GetAttendeesForEvent(Guid eventId)
         {
             var attendees = await _attendeeService.GetAttendeesForEventAsync(eventId);
-            return Ok(attendees);
+            return attendees != null ? Ok(attendees) : NotFound();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateAttendee(Guid eventId, [FromBody] CreateAttendeeDto dto)
         {
-            var attendeeId = await _attendeeService.CreateAttendeeAsync(eventId, dto);
-            return Ok(attendeeId);
+            try
+            {
+                var attendeeId = await _attendeeService.CreateAttendeeAsync(eventId, dto);
+                return Ok(attendeeId);
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return BadRequest();
+            }
+            
         }
     }
 }

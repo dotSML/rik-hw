@@ -1,7 +1,6 @@
 ﻿using api.Application.DTOs;
 using api.Application.Helpers;
 using api.Application.Mappers;
-using api.Domain.Entities;
 using api.Domain.Repositories;
 using api.Domain.Services;
 
@@ -18,7 +17,7 @@ namespace api.Application.Services
 
         public async Task<Guid> CreateEventAsync(CreateEventDto dto)
         {
-            var newEvent = new Event(dto.Name, dto.Date, dto.Location, dto.AdditionalInfo);
+            var newEvent = dto.ToEntity();
             await _eventRepository.AddAsync(newEvent);
             return newEvent.EventId;
         }
@@ -33,16 +32,16 @@ namespace api.Application.Services
         public async Task<IEnumerable<EventDto>> GetAllEventsAsync()
         {
             var events = await _eventRepository.GetAllAsync();
-            return events.Select(e => new EventDto(e)).ToList();
+            return events.Select(e => e.ToDto()).ToList();
         }
 
         public async Task AddAttendeeToEventAsync(Guid eventId, Guid attendeeId)
         {
             var eventDto = await GetEventByIdAsync(eventId);
 
-            AssertionHelper.AssertExistsAndOfType<EventDto>(eventDto);
+            var validatedEventDto = AssertionHelper.AssertExistsAndOfType<EventDto>(eventDto);
 
-            var eventEntity = eventDto.ToEvent();
+            var eventEntity = validatedEventDto.ToEntity();
 
             eventEntity?.AddAttendee(attendeeId);
 
@@ -55,8 +54,6 @@ namespace api.Application.Services
             var eventEntity = await _eventRepository.GetByIdAsync(eventId);
             return eventEntity != null;
         }
-
-        
     }
 
     }

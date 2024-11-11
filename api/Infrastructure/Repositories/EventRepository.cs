@@ -6,6 +6,7 @@ public class EventRepository : IEventRepository
 {
     private readonly AppDbContext _context;
 
+
     public EventRepository(AppDbContext context)
     {
         _context = context;

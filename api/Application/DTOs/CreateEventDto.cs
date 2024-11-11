@@ -1,6 +1,6 @@
 ﻿namespace api.Application.DTOs
 {
-    public class CreateEventDto
+    public class CreateEventDto:EventDto
     {
         public string Name { get; set; } = string.Empty;
         public DateTime Date { get; set; }
