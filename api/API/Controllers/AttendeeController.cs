@@ -34,9 +34,8 @@ namespace api.API.Controllers
             {
                 var attendeeId = await _attendeeService.CreateAttendeeAsync(eventId, dto);
                 return Ok(attendeeId);
-            } catch (Exception e)
+            } catch
             {
-                Console.WriteLine(e);
                 return BadRequest();
             }
             

@@ -7,7 +7,7 @@ namespace api.Application.Mappers
     {
         public static Event ToEntity(this EventDto dto)
         {
-            return new Event(dto.Name, dto.Date, dto.Location, dto.AdditionalInfo);
+            return new Event(dto.Name, DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc), dto.Location, dto.AdditionalInfo);
         }
 
 
@@ -17,7 +17,7 @@ namespace api.Application.Mappers
             {
                 EventId = entity.EventId,
                 Name = entity.Name,
-                Date = entity.Date,
+                Date = DateTime.SpecifyKind(entity.Date, DateTimeKind.Utc),
                 Location = entity.Location,
                 AdditionalInfo = entity.AdditionalInfo,
                 

@@ -53,7 +53,7 @@ public class AttendeeService : IAttendeeService
 
             return attendees.Select(a => a.ToDto());
         }
-        catch (Exception e)
+        catch
         {
             return null;
         }

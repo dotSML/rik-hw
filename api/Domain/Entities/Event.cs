@@ -12,7 +12,7 @@
 
         public Event(string name, DateTime date, string location, string additionalInfo)
         {
-            if (date <= DateTime.Now)
+            if (date <= DateTime.UtcNow)
                 throw new ArgumentException("The event date must be in the future.");
 
             EventId = Guid.NewGuid();
@@ -35,8 +35,7 @@
 
         public void UpdateEvent(string name, DateTime date, string location, string additionalInfo)
         {
-            if (date <= DateTime.Now)
-                throw new ArgumentException("The event date must be in the future.");
+            ValidateDate(date);
 
             Name = name;
             Date = date;
@@ -44,6 +43,12 @@
             AdditionalInfo = additionalInfo;
         }
 
-        
+        private void ValidateDate(DateTime date)
+        {
+            if (date <= DateTime.UtcNow)
+                throw new ArgumentException($"The event date must be in the future. sdfsdfsdf {date}");
+        }
+
+
     }
 }
