@@ -1,5 +1,5 @@
 ﻿using api.Domain.Enums;
-using api.Domain.ValueObjects;
+using api.Domain.Models;
 using System.Text.Json.Serialization;
 
 namespace api.Application.DTOs
@@ -7,8 +7,9 @@ namespace api.Application.DTOs
     public class CreateAttendeeDto
     {
         public string Name { get; set; } = string.Empty;
-        [JsonConverter(typeof(PaymentMethodConverter))]
-        public PaymentMethod PaymentMethod { get; set; }
+
+        public Guid EventId { get; set; }
+        public Guid PaymentMethodId { get; set; }
         public string AdditionalInfo { get; set; } = string.Empty;
         public string ParticipantRequests { get; set; } = string.Empty;
         public string PersonalIdCode { get; set; } = string.Empty;

@@ -1,7 +1,7 @@
 ﻿using api.Application.DTOs;
 using api.Application.Mappers;
 using api.Application.Services;
-using api.Domain.Entities;
+using api.Domain.Models;
 using api.Domain.Repositories;
 using Moq;
 using Xunit;
@@ -39,6 +39,7 @@ namespace Tests.UnitTests.Domain.Services
             var mockEvent =
             new
             {
+                Id = Guid.NewGuid(),
                 Name = "Test Event",
                 Date = DateTime.UtcNow.AddDays(1),
                 AdditionalInfo = "Test Additional Info",
@@ -48,7 +49,7 @@ namespace Tests.UnitTests.Domain.Services
 
             var createEventDto = new CreateEventDto { Name = mockEvent.Name, Date = mockEvent.Date };
             var eventId = await _eventService.CreateEventAsync(createEventDto);
-            _mockRepository.Setup(x => x.GetByIdAsync(eventId)).ReturnsAsync(new Event(mockEvent.Name, mockEvent.Date, mockEvent.AdditionalInfo, mockEvent.Location));
+            _mockRepository.Setup(x => x.GetByIdAsync(eventId)).ReturnsAsync(new Event(mockEvent.Name, mockEvent.Date, mockEvent.AdditionalInfo, mockEvent.Location, mockEvent.Id));
 
             // Act
             var result = await _eventService.GetEventByIdAsync(eventId);

@@ -7,7 +7,6 @@ namespace api.Domain.Services
         Task<Guid> CreateEventAsync(CreateEventDto dto);
         Task<IEnumerable<EventDto>> GetAllEventsAsync();
         Task<EventDto?> GetEventByIdAsync(Guid eventId);
-        Task AddAttendeeToEventAsync(Guid eventId, Guid attendeeId);
         Task<bool> EventExistsAsync(Guid eventId);
     }
 }

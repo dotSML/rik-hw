@@ -1,53 +1,49 @@
-﻿using api.Domain.Entities;
-using api.Domain.Enums;
+﻿using api.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 public class AppDbContext : DbContext
 {
-    public DbSet<Event> Events { get; set; }
-    public DbSet<Attendee> Attendees { get; set; }
-    public DbSet<EventAttendee> EventAttendees { get; set; }
+    public DbSet<EventEntity> Events { get; set; }
+    public DbSet<AttendeeEntity> Attendees { get; set; }
+    public DbSet<PaymentMethodEntity> PaymentMethods { get; set; }
 
     public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder)
-    {
-        var attendeeTypeConverter = new ValueConverter<AttendeeType, string>(
-        v => v.ToString(), // Convert AttendeeType to string for storage
-        v => (AttendeeType)Enum.Parse(typeof(AttendeeType), v) // Convert string back to AttendeeType
-    );
+    protected override void OnModelCreating(ModelBuilder modelBuilder) 
+        {
 
+        modelBuilder.Entity<AttendeeEntity>().UseTphMappingStrategy().HasDiscriminator<string>("AttendeeType")
+            .HasValue<NaturalPersonAttendeeEntity>("NaturalPerson")
+            .HasValue<LegalEntityAttendeeEntity>("LegalEntity");
 
-        modelBuilder.Entity<Attendee>()
-            .HasDiscriminator<AttendeeType>("AttendeeType")
-            .HasValue<NaturalPersonAttendee>(AttendeeType.NaturalPerson)
-            .HasValue<LegalEntityAttendee>(AttendeeType.LegalEntity);
+        modelBuilder.Entity<AttendeeEntity>()
+            .HasOne(a => a.Event)
+            .WithMany()
+            .HasForeignKey(a => a.EventId)
+            .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<Attendee>()
-            .Property("AttendeeType")
-            .HasConversion<string>();
-
-        modelBuilder.Entity<Attendee>()
-            .OwnsOne(a => a.PaymentMethod);
-
-        modelBuilder.Entity<EventAttendee>()
-    .HasKey(ea => new { ea.EventId, ea.AttendeeId });
-
-        modelBuilder.Entity<EventAttendee>()
-            .HasOne(ea => ea.Event)
-            .WithMany(e => e.EventAttendees)
-            .HasForeignKey(ea => ea.EventId);
-
-        modelBuilder.Entity<EventAttendee>()
-            .HasOne(ea => ea.Attendee)
-            .WithMany(a => a.EventAttendees)
-            .HasForeignKey(ea => ea.AttendeeId);
+        modelBuilder.Entity<AttendeeEntity>()
+        .HasOne(a => a.PaymentMethod)
+        .WithMany()
+        .HasForeignKey(a => a.PaymentMethodId)
+        .OnDelete(DeleteBehavior.Restrict);
 
 
 
-        base.OnModelCreating(modelBuilder);
+        modelBuilder.Entity<NaturalPersonAttendeeEntity>()
+            .Property(np => np.PersonalIdCode)
+            .IsRequired();
+
+        modelBuilder.Entity<LegalEntityAttendeeEntity>()
+            .Property(le => le.CompanyName)
+            .IsRequired();
+
+        modelBuilder.Entity<PaymentMethodEntity>().HasData(
+            new PaymentMethodEntity { Id = Guid.NewGuid(), Method = "Bank transfer" },
+            new PaymentMethodEntity { Id = Guid.NewGuid(), Method = "Cash" });
     }
 }
+
+

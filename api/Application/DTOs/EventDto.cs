@@ -1,11 +1,11 @@
-﻿using api.Domain.Entities;
+﻿using api.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace api.Application.DTOs
 {
     public class EventDto
     {
-        public Guid EventId { get; set; }
+        public Guid? Id { get; set; }
         public string Name { get; set; }
 
         [Required]
@@ -20,7 +20,7 @@ namespace api.Application.DTOs
 
         public EventDto(Event eventEntity)
         {
-            EventId = eventEntity.EventId;
+            Id = eventEntity.EventId;
             Name = eventEntity.Name;
             Date = eventEntity.Date;
             Location = eventEntity.Location;

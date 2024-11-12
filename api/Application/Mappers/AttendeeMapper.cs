@@ -1,6 +1,6 @@
 ﻿using api.Application.DTOs;
-using api.Domain.Entities;
 using api.Domain.Enums;
+using api.Domain.Models;
 
 public static class AttendeeMapper
 {
@@ -9,19 +9,22 @@ public static class AttendeeMapper
         return dto.Type switch
         {
             AttendeeType.NaturalPerson => new NaturalPersonAttendee(
+                dto.EventId,
                 dto.Name,
                 dto.PersonalIdCode,
-                dto.PaymentMethod,
+                dto.PaymentMethodId,
                 dto.AdditionalInfo,
-                dto.ParticipantRequests
+                null
             ),
             AttendeeType.LegalEntity => new LegalEntityAttendee(
+                dto.EventId,
                 dto.LegalName,
                 dto.CompanyRegistrationCode,
                 dto.AttendeeCount,
-                dto.PaymentMethod,
+                dto.PaymentMethodId,
                 dto.AdditionalInfo,
-                dto.ParticipantRequests
+                dto.ParticipantRequests,
+                null
             ),
             _ => throw new ArgumentException("Invalid attendee type")
         };
@@ -35,7 +38,7 @@ public static class AttendeeMapper
             Name = attendee.Name,
             PaymentMethod = attendee.PaymentMethod,
             AdditionalInfo = attendee.AdditionalInfo,
-            ParticipantRequests = attendee.ParticipantRequests
+            ParticipantRequests = attendee is LegalEntityAttendee legalAttendee ? legalAttendee.ParticipantRequests?.ToString() ?? string.Empty : string.Empty,
         };
     }
 }

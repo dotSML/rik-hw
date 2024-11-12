@@ -5,16 +5,31 @@ function MenuItem({ href, label }: { href: string, label: string }) {
 }
 export function Footer() {
     const columns = [
-        {heading: "Curabitur", menuItems: [{href: "google.com", label: "testika"}]},}
+        {
+            heading: "Curabitur", renderContent: () => <>
+                <MenuItem href="#" label="Emauris" />
+                <MenuItem href="#" label="Kfringilla" />
+                <MenuItem href="#" label="Oin magna sem" />
+                <MenuItem href="#" label="Kelementum" />
+            </>
+        },
+        {
+            heading: 'Fusce', renderContent: () => <>
+                <MenuItem href="#" label="Econsectetur" />
+                <MenuItem href="#" label="Ksollicitudin" />
+                <MenuItem href="#" label="Omvulputate" />
+                <MenuItem href="#" label="Nunc fringilla tellu" />
+            </>
+        },
+        {
+            heading: "Kontakt", renderContent: () => <>
+                <p>Peakontor Tallinnas</p>
+
+            </>
+        },
     ]
 
-    return <footer className="h-[12rem] bg-darkGrey grid gap-4 grid-cols-4 px-10 py-16">
-        <FooterColumn heading="Curabitur" menuItems={[{ href: "google.com", label: "testika" }]}><div className="flex flex-col">
-            {menuItems.map(({ label, href }, index) => <MenuItem key={`${heading}-menu-item-${index}`} label={label} href={href} />)}
-        </div></FooterColumn>
-        <FooterColumn heading="Fusce" menuItems={[{ href: "google.com", label: "testika" }]} />
-        <FooterColumn heading="Kontakt" menuItems={[{ href: "google.com", label: "testika" }]} />
-        <FooterColumn heading="" menuItems={[{ href: "google.com", label: "testika" }]} />
-
+    return <footer className="bg-darkGrey grid gap-4 grid-cols-3 px-10 py-16">
+        {columns.map(column => <FooterColumn heading={column.heading}>{column.renderContent()}</FooterColumn>)}
     </footer>
 }

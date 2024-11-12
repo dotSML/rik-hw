@@ -1,7 +1,7 @@
 ﻿using api.Application.DTOs;
 using api.Application.Helpers;
 using api.Application.Interfaces;
-using api.Domain.Entities;
+using api.Domain.Models;
 using api.Domain.Services;
 
 public class AttendeeService : IAttendeeService
@@ -18,26 +18,19 @@ public class AttendeeService : IAttendeeService
     }
 
     public async Task<Guid> CreateAttendeeAsync(Guid eventId, CreateAttendeeDto dto)
-    {
-        await _eventService.EventExistsAsync(eventId);
+    { 
+        var newAttendee = dto.ToAttendeeFromCreate();
 
-        await _unitOfWork.BeginTransactionAsync();
+        var createdAttendee = await _attendeeRepository.AddAsync(newAttendee);
 
-        try
+        await _unitOfWork.CommitTransactionAsync();
+
+        if (createdAttendee.AttendeeId == Guid.Empty)
         {
-            var newAttendee = await _attendeeRepository.AddAsync(dto.ToAttendeeFromCreate());
-
-            await _eventService.AddAttendeeToEventAsync(eventId, newAttendee.AttendeeId);
-
-            await _unitOfWork.CommitTransactionAsync();
-
-            return newAttendee.AttendeeId;
+            throw new Exception("Failed to create attendee");
         }
-        catch (Exception e)
-        {
-            await _unitOfWork.RollbackTransactionAsync();
-            throw;
-        }
+
+        return createdAttendee.AttendeeId ?? Guid.Empty;
     }
 
 

@@ -19,7 +19,7 @@ namespace api.Application.Services
         {
             var newEvent = dto.ToEntity();
             await _eventRepository.AddAsync(newEvent);
-            return newEvent.EventId;
+            return newEvent.EventId ?? Guid.Empty;
         }
 
         public async Task<EventDto?> GetEventByIdAsync(Guid eventId)
@@ -33,20 +33,6 @@ namespace api.Application.Services
         {
             var events = await _eventRepository.GetAllAsync();
             return events.Select(e => e.ToDto()).ToList();
-        }
-
-        public async Task AddAttendeeToEventAsync(Guid eventId, Guid attendeeId)
-        {
-            var eventDto = await GetEventByIdAsync(eventId);
-
-            var validatedEventDto = AssertionHelper.AssertExistsAndOfType<EventDto>(eventDto);
-
-            var eventEntity = validatedEventDto.ToEntity();
-
-            eventEntity?.AddAttendee(attendeeId);
-
-
-            await _eventRepository.UpdateAsync(eventEntity);
         }
 
         public async Task<bool> EventExistsAsync(Guid eventId)

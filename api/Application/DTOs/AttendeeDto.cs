@@ -1,12 +1,11 @@
-﻿using api.Domain.Entities;
-using api.Domain.Enums;
-using api.Domain.ValueObjects;
+﻿using api.Domain.Enums;
+using api.Domain.Models;
 
 namespace api.Application.DTOs
 {
     public class AttendeeDto
     {
-        public Guid Id { get; set; }
+        public Guid? Id { get; set; }
         public string Name { get; set; }
         public PaymentMethod PaymentMethod { get; set; }
         public string AdditionalInfo { get; set; }
@@ -29,7 +28,6 @@ namespace api.Application.DTOs
             Name = attendee.Name;
             PaymentMethod = attendee.PaymentMethod;
             AdditionalInfo = attendee.AdditionalInfo;
-            ParticipantRequests = attendee.ParticipantRequests;
             Type = attendee switch
             {
                 NaturalPersonAttendee => AttendeeType.NaturalPerson,
@@ -46,11 +44,8 @@ namespace api.Application.DTOs
                 LegalName = legalEntity.CompanyName;
                 CompanyRegistrationCode = legalEntity.CompanyRegistrationCode;
                 AttendeeCount = legalEntity.AttendeeCount;
+                ParticipantRequests = legalEntity.ParticipantRequests;
             }
-
-            Events = attendee.EventAttendees
-                        .Select(ea => new EventDto(ea.Event))
-                        .ToList();
         }
     }
 }

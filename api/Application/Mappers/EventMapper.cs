@@ -1,5 +1,5 @@
 ﻿using api.Application.DTOs;
-using api.Domain.Entities;
+using api.Domain.Models;
 
 namespace api.Application.Mappers
 {
@@ -7,7 +7,7 @@ namespace api.Application.Mappers
     {
         public static Event ToEntity(this EventDto dto)
         {
-            return new Event(dto.Name, DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc), dto.Location, dto.AdditionalInfo);
+            return new Event(dto.Name, DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc), dto.Location, dto.AdditionalInfo, dto.Id);
         }
 
 
@@ -15,12 +15,11 @@ namespace api.Application.Mappers
         {
             return new EventDto
             {
-                EventId = entity.EventId,
+                Id = entity.EventId,
                 Name = entity.Name,
                 Date = DateTime.SpecifyKind(entity.Date, DateTimeKind.Utc),
                 Location = entity.Location,
                 AdditionalInfo = entity.AdditionalInfo,
-
             };
         }
     }

@@ -1,4 +1,5 @@
-﻿using api.Domain.Entities;
+﻿using api.Domain.Models;
+using api.Infrastructure.Entities;
 
 namespace api.Domain.Repositories
 {
