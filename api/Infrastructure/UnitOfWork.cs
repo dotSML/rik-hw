@@ -1,5 +1,6 @@
 ﻿using api.Application.Interfaces;
 using api.Domain.Repositories;
+using api.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
 
 public class UnitOfWork : IUnitOfWork

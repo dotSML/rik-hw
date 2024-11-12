@@ -17,9 +17,9 @@ namespace api.Application.Services
 
         public async Task<Guid> CreateEventAsync(CreateEventDto dto)
         {
-            var newEvent = dto.ToEntity();
+            var newEvent = dto.ToModel();
             await _eventRepository.AddAsync(newEvent);
-            return newEvent.EventId ?? Guid.Empty;
+            return newEvent.EventId;
         }
 
         public async Task<EventDto?> GetEventByIdAsync(Guid eventId)

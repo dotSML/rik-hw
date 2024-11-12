@@ -3,6 +3,7 @@ using api.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
 builder.Services.AddInfrastructureServices("Data Source=eventmanagement.db");
 

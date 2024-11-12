@@ -8,22 +8,19 @@ public class AttendeeService : IAttendeeService
 {
     private readonly IAttendeeRepository _attendeeRepository;
     private readonly IEventService _eventService;
-    private readonly IUnitOfWork _unitOfWork;
 
-    public AttendeeService(IUnitOfWork unitOfWork, IAttendeeRepository attendeeRepository, IEventService eventService)
+    public AttendeeService(IAttendeeRepository attendeeRepository, IEventService eventService)
     {
         _attendeeRepository = attendeeRepository;
         _eventService = eventService;
-        _unitOfWork = unitOfWork;
     }
 
-    public async Task<Guid> CreateAttendeeAsync(Guid eventId, CreateAttendeeDto dto)
+    public async Task<Guid> CreateAttendeeAsync(CreateAttendeeDto dto)
     { 
         var newAttendee = dto.ToAttendeeFromCreate();
 
         var createdAttendee = await _attendeeRepository.AddAsync(newAttendee);
 
-        await _unitOfWork.CommitTransactionAsync();
 
         if (createdAttendee.AttendeeId == Guid.Empty)
         {

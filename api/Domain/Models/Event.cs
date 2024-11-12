@@ -1,9 +1,8 @@
-﻿
-using api.Domain.Models;
-
-public class Event
+﻿namespace api.Domain.Models
+{
+    public class Event
     {
-        public Guid? EventId { get; private set; }
+        public Guid EventId { get; private set; }
         public string Name { get; private set; }
         public DateTime Date { get; private set; }
         public string Location { get; private set; }
@@ -12,7 +11,7 @@ public class Event
         public ICollection<Attendee> Attendees { get; private set; } = new List<Attendee>();
 
 
-    public Event() { }
+        public Event() { }
         public Event(string name, DateTime date, string location, string additionalInfo, Guid? id)
         {
             if (date <= DateTime.UtcNow)
@@ -43,3 +42,4 @@ public class Event
 
 
     }
+}

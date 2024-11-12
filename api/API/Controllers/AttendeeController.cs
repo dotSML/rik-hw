@@ -28,11 +28,11 @@ namespace api.API.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateAttendee(Guid eventId, [FromBody] CreateAttendeeDto dto)
+        public async Task<IActionResult> CreateAttendee([FromBody] CreateAttendeeDto dto)
         {
             try
             {
-                var attendeeId = await _attendeeService.CreateAttendeeAsync(eventId, dto);
+                var attendeeId = await _attendeeService.CreateAttendeeAsync(dto);
                 return Ok(attendeeId);
             }
             catch

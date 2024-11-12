@@ -5,9 +5,15 @@ namespace api.Application.Mappers
 {
     public static class EventMapper
     {
-        public static Event ToEntity(this EventDto dto)
+        public static Event ToModel(this EventDto dto)
         {
             return new Event(dto.Name, DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc), dto.Location, dto.AdditionalInfo, dto.Id);
+        }
+
+
+        public static Event ToModel(this CreateEventDto dto)
+        {
+            return new Event(dto.Name, DateTime.SpecifyKind(dto.Date, DateTimeKind.Utc), dto.Location, dto.AdditionalInfo, null);
         }
 
 

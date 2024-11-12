@@ -1,5 +1,4 @@
-﻿using api.Domain.Models;
-
+﻿
 namespace api.Infrastructure.Entities
 {
     public class AttendeeEntity
@@ -7,7 +6,7 @@ namespace api.Infrastructure.Entities
         public Guid Id { get; protected set; }
         public string Name { get; protected set; }
         public Guid EventId { get; protected set; }
-        public Event? Event { get; protected set; }
+        public EventEntity? Event { get; protected set; }
         public string AdditionalInfo { get; protected set; }
         public Guid PaymentMethodId { get; protected set; }
 

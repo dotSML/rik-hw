@@ -1,6 +1,4 @@
-﻿using api.Domain.Enums;
-
-namespace api.Infrastructure.Entities
+﻿namespace api.Infrastructure.Entities
 {
     public class EventEntity
     {

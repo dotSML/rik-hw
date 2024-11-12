@@ -65,7 +65,7 @@ namespace Tests.UnitTests.Domain.Services
             // Arrange
             var createEventDto = new CreateEventDto { Name = "Test Event", Date = DateTime.UtcNow.AddDays(1) };
             await _eventService.CreateEventAsync(createEventDto);
-            _mockRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Event> { createEventDto.ToEntity() });
+            _mockRepository.Setup(x => x.GetAllAsync()).ReturnsAsync(new List<Event> { createEventDto.ToModel() });
 
             // Act
             var events = await _eventService.GetAllEventsAsync();

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using api.Infrastructure;
 
 #nullable disable
 
@@ -15,76 +16,6 @@ namespace api.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.10");
-
-            modelBuilder.Entity("Event", b =>
-                {
-                    b.Property<Guid?>("EventId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("AdditionalInfo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Location")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("EventId");
-
-                    b.ToTable("Event");
-                });
-
-            modelBuilder.Entity("api.Domain.Models.Attendee", b =>
-                {
-                    b.Property<Guid?>("AttendeeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("AdditionalInfo")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("EventId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("PaymentMethodId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("AttendeeId");
-
-                    b.HasIndex("EventId");
-
-                    b.HasIndex("PaymentMethodId");
-
-                    b.ToTable("Attendee");
-                });
-
-            modelBuilder.Entity("api.Domain.Models.PaymentMethod", b =>
-                {
-                    b.Property<Guid>("PaymentMethodId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Method")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("PaymentMethodId");
-
-                    b.ToTable("PaymentMethod");
-                });
 
             modelBuilder.Entity("api.Infrastructure.Entities.AttendeeEntity", b =>
                 {
@@ -172,12 +103,12 @@ namespace api.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("97a4e915-652d-47aa-aab5-441624365509"),
+                            Id = new Guid("6820a0ed-6c59-4c28-9d32-c086ce742260"),
                             Method = "Bank transfer"
                         },
                         new
                         {
-                            Id = new Guid("ca066759-b7d1-41af-8f95-980226cef322"),
+                            Id = new Guid("6856ea90-a828-407a-82a6-022a72a3dff1"),
                             Method = "Cash"
                         });
                 });
@@ -215,32 +146,13 @@ namespace api.Migrations
                     b.HasDiscriminator().HasValue("NaturalPerson");
                 });
 
-            modelBuilder.Entity("api.Domain.Models.Attendee", b =>
-                {
-                    b.HasOne("Event", "Event")
-                        .WithMany("Attendees")
-                        .HasForeignKey("EventId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("api.Domain.Models.PaymentMethod", "PaymentMethod")
-                        .WithMany()
-                        .HasForeignKey("PaymentMethodId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Event");
-
-                    b.Navigation("PaymentMethod");
-                });
-
             modelBuilder.Entity("api.Infrastructure.Entities.AttendeeEntity", b =>
                 {
                     b.HasOne("api.Infrastructure.Entities.EventEntity", null)
                         .WithMany("Attendees")
                         .HasForeignKey("EventEntityId");
 
-                    b.HasOne("Event", "Event")
+                    b.HasOne("api.Infrastructure.Entities.EventEntity", "Event")
                         .WithMany()
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -255,11 +167,6 @@ namespace api.Migrations
                     b.Navigation("Event");
 
                     b.Navigation("PaymentMethod");
-                });
-
-            modelBuilder.Entity("Event", b =>
-                {
-                    b.Navigation("Attendees");
                 });
 
             modelBuilder.Entity("api.Infrastructure.Entities.EventEntity", b =>

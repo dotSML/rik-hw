@@ -5,7 +5,7 @@ namespace api.Application.DTOs
 {
     public class EventDto
     {
-        public Guid? Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
 
         [Required]
@@ -20,7 +20,6 @@ namespace api.Application.DTOs
 
         public EventDto(Event eventEntity)
         {
-            Id = eventEntity.EventId;
             Name = eventEntity.Name;
             Date = eventEntity.Date;
             Location = eventEntity.Location;
