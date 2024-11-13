@@ -1,6 +1,8 @@
+import { ReactNode } from "react"
+import { EventModel } from "../../../../domain/models/event.model"
 import { EventListItem } from "./event-list-item.component"
 
-export function EventOverview({ heading, className, data, actions }: { heading: string, className?: string, data: any, actions?: ReactNode }) {
+export function EventOverview({ heading, className, data, actions }: { heading: string, className?: string, data: EventModel[], actions?: ReactNode }) {
     return <div className={`flex flex-col items-center w-full bg-red h-full shadow-md ${className}`}>
         <div className="flex w-full h-20 justify-center items-center bg-primaryBlue">
             <p className="text-xl text-white">{heading}</p>

@@ -5,7 +5,7 @@ import { AppRouter } from "./router"
 function App() {
 
     return (
-        <div className="bg-primaryGrey">
+        <div className="min-h-screen flex flex-col bg-primaryGrey">
             <Navbar />
             <AppRouter />
             <Footer />

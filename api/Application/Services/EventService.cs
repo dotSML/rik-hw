@@ -1,4 +1,4 @@
-﻿using api.Application.DTOs;
+using api.Application.DTOs;
 using api.Application.Helpers;
 using api.Application.Mappers;
 using api.Domain.Repositories;
@@ -29,9 +29,9 @@ namespace api.Application.Services
             return eventEntity != null ? eventEntity.ToDto() : null;
         }
 
-        public async Task<IEnumerable<EventDto>> GetAllEventsAsync()
+        public async Task<IEnumerable<EventDto>> GetAllEventsAsync(string? status)
         {
-            var events = await _eventRepository.GetAllAsync();
+            var events = await _eventRepository.GetAllAsync(status);
             return events.Select(e => e.ToDto()).ToList();
         }
 

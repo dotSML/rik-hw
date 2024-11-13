@@ -23,7 +23,7 @@ export function Footer() {
         },
         {
             heading: "Kontakt", containerClass: "ml-20 col-span-2", renderContent: () => <div className="flex gap-4">
-                <div className="flex flex-col"><div className="flex"><p className="font-bold">Peakontor:</p><p className="font-bold">Tallinnas</p></div>
+                <div className="flex flex-col"><div className="flex"><p className="font-bold">Peakontor:{" "}</p><p className="font-bold">Tallinnas</p></div>
                 <p>
                 Väike-Ameerika 11415 Tallinn
                 </p>
@@ -33,7 +33,7 @@ export function Footer() {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <div className="flex"><p className="font-bold">Harukontor:</p><p className="font-bold">Võrus</p></div>
+                    <div className="flex"><p className="font-bold">Harukontor:{" "}</p><p className="font-bold">Võrus</p></div>
                     <p>
                         Väike-Ameerika 11415 Tallinn
                     </p>
@@ -49,7 +49,7 @@ export function Footer() {
         
     ]
 
-    return <footer className="bg-darkGrey grid gap-4 grid-cols-4 px-16 py-20">
+    return <footer className="bg-darkGrey grid gap-4 grid-cols-4 p-16 py-12">
         {columns.map((column, index) => (
             <FooterColumn
                 key={index}

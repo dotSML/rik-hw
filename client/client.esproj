@@ -9,6 +9,8 @@
     <BuildOutputFolder>$(MSBuildProjectDirectory)\dist</BuildOutputFolder>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="src\routes\" />
+    <Folder Include="src\application\NewFolder\" />
+    <Folder Include="src\presentation\components\NewFolder1\" />
+    <Folder Include="src\presentation\components\NewFolder\" />
   </ItemGroup>
 </Project>

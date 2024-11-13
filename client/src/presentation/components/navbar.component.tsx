@@ -3,7 +3,7 @@ import symbol from '../../assets/symbol.svg';
 
 export function Navbar() {
 
-    return <div className='flex w-full py-4 px-10'>
+    return <div className='flex w-full py-4 px-10 shadow-md'>
         <div className="flex basis-[40%]">
             <img src={logo} alt="logo" />
 

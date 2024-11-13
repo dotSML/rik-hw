@@ -1,4 +1,4 @@
-﻿using api.Domain.Models;
+using api.Domain.Models;
 using api.Domain.Repositories;
 using api.Infrastructure;
 using api.Infrastructure.Entities;
@@ -18,17 +18,31 @@ namespace api.Infrastructure.Repositories
 
         public async Task<Event> GetByIdAsync(Guid eventId)
         {
-            return await _context.Events
-                .Include(e => e.Attendees).Select(e => MapToDomainModel(e))
-                .FirstOrDefaultAsync(e => e.EventId == eventId);
+            var eventEntity = await _context.Events
+                .FirstOrDefaultAsync(e => e.Id == eventId);
+
+            return MapToDomainModel(eventEntity);
         }
 
-        public async Task<IEnumerable<Event>> GetAllAsync()
+        public async Task<IEnumerable<Event>> GetAllAsync(string? status)
         {
-            return await _context.Events
-                .Include(e => e.Attendees).Select(e => MapToDomainModel(e))
-                .ToListAsync();
+            var query = _context.Events
+                .Include(e => e.Attendees)
+                .AsQueryable();
+
+            if (status == "upcoming")
+            {
+                query = query.Where(e => e.Date >= DateTime.Today); 
+            }
+            else if (status == "past")
+            {
+                query = query.Where(e => e.Date < DateTime.Today);
+            }
+
+            var eventEntities = await query.ToListAsync();
+            return eventEntities.Select(e => MapToDomainModel(e));
         }
+
 
         public async Task<IEnumerable<Event>> GetUpcomingEventsAsync()
         {

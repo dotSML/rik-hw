@@ -1,4 +1,4 @@
-﻿using api.Application.DTOs;
+using api.Application.DTOs;
 using api.Domain.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,9 +31,9 @@ namespace api.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllEvents()
+        public async Task<IActionResult> GetAllEvents([FromQuery] string? status)
         {
-            var events = await _eventService.GetAllEventsAsync();
+            var events = await _eventService.GetAllEventsAsync(status);
             return Ok(events);
         }
     }
