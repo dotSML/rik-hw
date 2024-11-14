@@ -1,4 +1,4 @@
-﻿
+
 using api.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,7 +21,7 @@ namespace api.API.Controllers
         }
 
         [HttpGet("event/{eventId}")]
-        public async Task<IActionResult> GetAttendeesForEvent(Guid eventId)
+        public async Task<IActionResult> GetAttendeesForEvent([FromRoute] Guid eventId)
         {
             var attendees = await _attendeeService.GetAttendeesForEventAsync(eventId);
             return attendees != null ? Ok(attendees) : NotFound();
@@ -35,7 +35,7 @@ namespace api.API.Controllers
                 var attendeeId = await _attendeeService.CreateAttendeeAsync(dto);
                 return Ok(attendeeId);
             }
-            catch
+            catch(Exception e)
             {
                 return BadRequest();
             }

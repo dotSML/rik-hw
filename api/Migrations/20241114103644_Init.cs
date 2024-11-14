@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
-
 namespace api.Migrations
 {
     /// <inheritdoc />
@@ -21,7 +19,7 @@ namespace api.Migrations
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     Date = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Location = table.Column<string>(type: "TEXT", nullable: false),
-                    AdditionalInfo = table.Column<string>(type: "TEXT", nullable: false)
+                    AdditionalInfo = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -45,16 +43,17 @@ namespace api.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
                     EventId = table.Column<Guid>(type: "TEXT", nullable: false),
-                    AdditionalInfo = table.Column<string>(type: "TEXT", nullable: false),
+                    AdditionalInfo = table.Column<string>(type: "TEXT", nullable: true),
                     PaymentMethodId = table.Column<Guid>(type: "TEXT", nullable: false),
                     AttendeeType = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
                     EventEntityId = table.Column<Guid>(type: "TEXT", nullable: true),
-                    CompanyName = table.Column<string>(type: "TEXT", nullable: true),
+                    LegalName = table.Column<string>(type: "TEXT", nullable: true),
                     CompanyRegistrationCode = table.Column<string>(type: "TEXT", nullable: true),
                     AttendeeCount = table.Column<int>(type: "INTEGER", nullable: true),
                     ParticipantRequests = table.Column<string>(type: "TEXT", nullable: true),
+                    FirstName = table.Column<string>(type: "TEXT", nullable: true),
+                    LastName = table.Column<string>(type: "TEXT", nullable: true),
                     PersonalIdCode = table.Column<string>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
@@ -77,15 +76,6 @@ namespace api.Migrations
                         principalTable: "PaymentMethods",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.InsertData(
-                table: "PaymentMethods",
-                columns: new[] { "Id", "Method" },
-                values: new object[,]
-                {
-                    { new Guid("6820a0ed-6c59-4c28-9d32-c086ce742260"), "Bank transfer" },
-                    { new Guid("6856ea90-a828-407a-82a6-022a72a3dff1"), "Cash" }
                 });
 
             migrationBuilder.CreateIndex(

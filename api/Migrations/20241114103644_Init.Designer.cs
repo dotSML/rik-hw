@@ -11,7 +11,7 @@ using api.Infrastructure;
 namespace api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241112143102_Init")]
+    [Migration("20241114103644_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -27,7 +27,6 @@ namespace api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AdditionalInfo")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AttendeeType")
@@ -39,10 +38,6 @@ namespace api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("EventId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("PaymentMethodId")
@@ -70,7 +65,6 @@ namespace api.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("AdditionalInfo")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
@@ -102,18 +96,6 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentMethods");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("6820a0ed-6c59-4c28-9d32-c086ce742260"),
-                            Method = "Bank transfer"
-                        },
-                        new
-                        {
-                            Id = new Guid("6856ea90-a828-407a-82a6-022a72a3dff1"),
-                            Method = "Cash"
-                        });
                 });
 
             modelBuilder.Entity("api.Infrastructure.Entities.LegalEntityAttendeeEntity", b =>
@@ -123,11 +105,11 @@ namespace api.Migrations
                     b.Property<int>("AttendeeCount")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CompanyName")
+                    b.Property<string>("CompanyRegistrationCode")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("CompanyRegistrationCode")
+                    b.Property<string>("LegalName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -141,6 +123,14 @@ namespace api.Migrations
             modelBuilder.Entity("api.Infrastructure.Entities.NaturalPersonAttendeeEntity", b =>
                 {
                     b.HasBaseType("api.Infrastructure.Entities.AttendeeEntity");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("PersonalIdCode")
                         .IsRequired()

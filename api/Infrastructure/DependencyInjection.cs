@@ -1,4 +1,4 @@
-﻿using api.Application.Interfaces;
+using api.Application.Interfaces;
 using api.Domain.Repositories;
 using api.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +14,7 @@ namespace api.Infrastructure
 
             services.AddScoped<IEventRepository, EventRepository>();
             services.AddScoped<IAttendeeRepository, AttendeeRepository>();
+            services.AddScoped<IPaymentMethodRepository, PaymentMethodRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

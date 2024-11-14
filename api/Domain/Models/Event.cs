@@ -1,4 +1,4 @@
-﻿namespace api.Domain.Models
+namespace api.Domain.Models
 {
     public class Event
     {
@@ -6,7 +6,7 @@
         public string Name { get; private set; }
         public DateTime Date { get; private set; }
         public string Location { get; private set; }
-        public string AdditionalInfo { get; private set; }
+        public string? AdditionalInfo { get; private set; }
 
         public ICollection<Attendee> Attendees { get; private set; } = new List<Attendee>();
 

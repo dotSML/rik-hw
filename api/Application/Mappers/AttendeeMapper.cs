@@ -1,4 +1,5 @@
-﻿using api.Application.DTOs;
+using api.Application.DTOs;
+using api.Application.Mappers;
 using api.Domain.Enums;
 using api.Domain.Models;
 
@@ -8,9 +9,10 @@ public static class AttendeeMapper
     {
         return dto.Type switch
         {
-            AttendeeType.NaturalPerson => new NaturalPersonAttendee(
+           AttendeeType.NaturalPerson => new NaturalPersonAttendee(
                 dto.EventId,
-                dto.Name,
+                dto.FirstName,
+                dto.LastName,
                 dto.PersonalIdCode,
                 dto.PaymentMethodId,
                 dto.AdditionalInfo,
@@ -26,19 +28,39 @@ public static class AttendeeMapper
                 dto.ParticipantRequests,
                 null
             ),
-            _ => throw new ArgumentException("Invalid attendee type")
+            _ => throw new ArgumentException("Invalid attendee types")
         };
     }
 
     public static AttendeeDto ToDto(this Attendee attendee)
     {
-        return new AttendeeDto
+        var dto = new AttendeeDto
         {
             Id = attendee.AttendeeId,
-            Name = attendee.Name,
             PaymentMethod = attendee.PaymentMethod,
             AdditionalInfo = attendee.AdditionalInfo,
-            ParticipantRequests = attendee is LegalEntityAttendee legalAttendee ? legalAttendee.ParticipantRequests?.ToString() ?? string.Empty : string.Empty,
+            FirstName = string.Empty,
+            LastName = string.Empty,
+            LegalName = string.Empty,
+            ParticipantRequests = string.Empty,
+            Event = attendee.Event?.ToDto(),
+            Type = attendee.GetType() == typeof(NaturalPersonAttendee) ? AttendeeType.NaturalPerson : AttendeeType.LegalEntity,
         };
+
+        if (attendee is NaturalPersonAttendee naturalAttendee)
+        {
+            dto.FirstName = naturalAttendee.FirstName;
+            dto.LastName = naturalAttendee.LastName;
+            dto.PersonalIdCode = naturalAttendee.PersonalIdCode;
+        }
+        else if (attendee is LegalEntityAttendee legalAttendee)
+        {
+            dto.LegalName = legalAttendee.LegalName;
+            dto.CompanyRegistrationCode = legalAttendee.CompanyRegistrationCode;
+            dto.ParticipantRequests = legalAttendee.ParticipantRequests?.ToString() ?? string.Empty;
+        }
+
+        return dto;
     }
+
 }

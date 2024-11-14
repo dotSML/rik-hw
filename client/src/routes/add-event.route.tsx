@@ -4,6 +4,7 @@ import { PageWrapper } from "../presentation/components/page-wrapper.component";
 import { createEvent } from "../application/use-cases/create-event.use-case";
 import useForm from "../application/NewFolder/use-form.hook";
 import { required } from "../application/NewFolder/validators";
+import { ActionGroup } from "../presentation/components/action-group.component";
 
 export function AddEventRoute()
 {
@@ -38,9 +39,11 @@ export function AddEventRoute()
     return <PageWrapper title="Ürituse lisamine">
         <div className="flex flex-col p-8">
             <AddEventForm values={values} errors={errors} handleChange={handleChange} handleBlur={handleBlur} />
-            <div className="flex gap-2 mt-8">
-                <Button variant="secondary" title="Tagasi" onClick={() => console.log(handleSubmit) } />
-                <Button variant="primary" title="Lisa" disabled={isValid} onClick={() => onSubmit() } />
+            <div className="mt-8">
+                <ActionGroup actions={[
+                    { title: 'Tagasi', variant: 'secondary', onClick: () => { } },
+                    { title: 'Lisa', variant: 'primary', onClick: onSubmit, isDisabled: !isValid }
+                ] } />
             </div>
         
         </div>

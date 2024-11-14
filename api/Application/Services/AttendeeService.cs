@@ -1,4 +1,4 @@
-﻿using api.Application.DTOs;
+using api.Application.DTOs;
 using api.Application.Helpers;
 using api.Application.Interfaces;
 using api.Domain.Models;
@@ -31,7 +31,7 @@ public class AttendeeService : IAttendeeService
     }
 
 
-    public async Task<IEnumerable<AttendeeDto>?> GetAttendeesForEventAsync(Guid eventId)
+    public async Task<IEnumerable<AttendeeDto>> GetAttendeesForEventAsync(Guid eventId)
     {
         try
         {

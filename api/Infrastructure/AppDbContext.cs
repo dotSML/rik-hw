@@ -1,4 +1,4 @@
-﻿using api.Infrastructure.Entities;
+using api.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Infrastructure
@@ -39,7 +39,7 @@ namespace api.Infrastructure
                 .IsRequired();
 
             modelBuilder.Entity<LegalEntityAttendeeEntity>()
-                .Property(le => le.CompanyName)
+                .Property(le => le.LegalName)
                 .IsRequired();
 
             modelBuilder.Entity<PaymentMethodEntity>().HasData(

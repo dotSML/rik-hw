@@ -1,4 +1,4 @@
-﻿using api.Application.Services;
+using api.Application.Services;
 using api.Domain.Services;
 
 namespace api.Application
@@ -9,6 +9,7 @@ namespace api.Application
         {
             services.AddScoped<IEventService, EventService>();
             services.AddScoped<IAttendeeService, AttendeeService>();
+            services.AddScoped<IPaymentMethodService, PaymentMethodService>();
 
             return services;
         }

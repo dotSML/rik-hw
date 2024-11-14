@@ -6,6 +6,7 @@ function App() {
 
     return (
         <div className="min-h-screen flex flex-col bg-primaryGrey">
+        
             <Navbar />
             <AppRouter />
             <Footer />

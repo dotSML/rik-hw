@@ -1,4 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace api.Application.DTOs
 {
@@ -11,6 +11,6 @@ namespace api.Application.DTOs
         public DateTime Date { get; set; }
 
         public string Location { get; set; }
-        public string AdditionalInfo { get; set; }
+        public string? AdditionalInfo { get; set; }
     }
 }

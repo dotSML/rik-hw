@@ -1,4 +1,4 @@
-﻿namespace api.Infrastructure.Entities
+namespace api.Infrastructure.Entities
 {
     public class EventEntity
     {
@@ -6,7 +6,7 @@
         public string Name { get; private set; }
         public DateTime Date { get; private set; }
         public string Location { get; private set; }
-        public string AdditionalInfo { get; private set; }
+        public string? AdditionalInfo { get; private set; }
 
         public ICollection<AttendeeEntity> Attendees { get; set; } = new List<AttendeeEntity>();
 

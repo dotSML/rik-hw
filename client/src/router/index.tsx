@@ -15,7 +15,7 @@ const router = createBrowserRouter([
     {
         path: '/events/add',
         element: <AddEventRoute />
-    }
+    },
 ]);
 
 export function AppRouter() {

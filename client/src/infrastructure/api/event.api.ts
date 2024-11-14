@@ -15,7 +15,7 @@ export const fetchEvents = async (params: URLSearchParams) => {
 
 export const fetchEvent = async (eventId: string) => {
     try {
-        const response = await axios.get(`/api/events/${eventId}`);
+        const response = await axios.get(`http://localhost:5220/api/events/${eventId}`);
         return response.data;
     } catch (error) {
         console.error(error)

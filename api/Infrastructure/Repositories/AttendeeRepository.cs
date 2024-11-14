@@ -1,4 +1,4 @@
-﻿using api.Domain.Models;
+using api.Domain.Models;
 using api.Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,12 +15,13 @@ namespace api.Infrastructure.Repositories
 
         public async Task<IEnumerable<Attendee>> GetByEventIdAsync(Guid eventId)
         {
-            return await _context.Attendees.Where(x => x.EventId == eventId).Select(a => MapToDomainModel(a)).ToListAsync();
+            var attendees = await _context.Attendees.Where(x => x.EventId == eventId).Include(x => x.Event).Include(x => x.PaymentMethod).ToListAsync();
+            return attendees.Select(a => MapToDomainModel(a));
         }
 
         public async Task<Attendee> GetByIdAsync(Guid attendeeId)
         {
-            return MapToDomainModel(await _context.Attendees.SingleOrDefaultAsync(x => x.Id == attendeeId));
+            return MapToDomainModel(await _context.Attendees.Include(x => x.Event).Include(x => x.PaymentMethod).SingleOrDefaultAsync(x => x.Id == attendeeId));
         }
 
         public async Task<IEnumerable<Attendee>> GetAllAsync()
@@ -59,8 +60,8 @@ namespace api.Infrastructure.Repositories
         {
             return attendee switch
             {
-                NaturalPersonAttendee naturalPerson => new NaturalPersonAttendeeEntity(naturalPerson.EventId, naturalPerson.Name, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo),
-                LegalEntityAttendee legalEntity => new LegalEntityAttendeeEntity(legalEntity.EventId, legalEntity.CompanyName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests),
+                NaturalPersonAttendee naturalPerson => new NaturalPersonAttendeeEntity(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.AttendeeId, EventRepository.MapToEntity(naturalPerson.Event), PaymentMethodRepository.MapToEntity(naturalPerson.PaymentMethod)),
+                LegalEntityAttendee legalEntity => new LegalEntityAttendeeEntity(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.AttendeeId, EventRepository.MapToEntity(legalEntity.Event), PaymentMethodRepository.MapToEntity(legalEntity.PaymentMethod)),
                 _ => throw new ArgumentException("Unknown attendee type")
             };
         }
@@ -69,8 +70,8 @@ namespace api.Infrastructure.Repositories
         {
             return attendeeEntity switch
             {
-                NaturalPersonAttendeeEntity naturalPerson => new NaturalPersonAttendee(naturalPerson.EventId, naturalPerson.Name, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.Id),
-                LegalEntityAttendeeEntity legalEntity => new LegalEntityAttendee(legalEntity.EventId, legalEntity.CompanyName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.Id),
+                NaturalPersonAttendeeEntity naturalPerson => new NaturalPersonAttendee(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.Id, EventRepository.MapToDomainModel(naturalPerson.Event), PaymentMethodRepository.MapToDomainModel(naturalPerson.PaymentMethod)),
+                LegalEntityAttendeeEntity legalEntity => new LegalEntityAttendee(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.Id, EventRepository.MapToDomainModel(legalEntity.Event), PaymentMethodRepository.MapToDomainModel(legalEntity.PaymentMethod)),
                 _ => throw new ArgumentException("Unknown attendee type")
             };
         }
