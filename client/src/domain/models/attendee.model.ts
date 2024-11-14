@@ -2,14 +2,27 @@
 
 export class AttendeeModel  {
     public id: string;
-    public name: string;
-    public personalCode?: string;
-    public companyRegistryCode?: string;
-    constructor({ id, name, personalCode, companyRegistryCode }: {id: string, name: string, personalCode?: string, companyRegistryCode?: string}) {
+    
+    public firstName?: string;
+    public lastName?: string;
+    public legalName?: string;
+    public companyRegistrationCode?: string;
+    public additionalInfo?: string;
+    public participantRequests?: string;
+    public attendeeCount?: number;
+    public personalIdCode?: string;
+    public type: "NaturalPerson" | "LegalEntity"
+    constructor({ id, type, additionalInfo, participantRequests, attendeeCount, legalName, firstName, lastName, personalIdCode, companyRegistrationCode }: { id: string, type: "NaturalPerson" | "LegalEntity", firstName?: string, lastName?: string, personalIdCode?: string, companyRegistryCode?: string, legalName?: string, participantRequests?: string, additionalInfo?: string, attendeeCount?: number }) {
         this.id = id;
-        this.name = name;
-        this.personalCode = personalCode;
-        this.companyRegistryCode = companyRegistryCode;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.legalName = legalName;
+        this.additionalInfo = additionalInfo;
+        this.participantRequests = participantRequests;
+        this.attendeeCount = attendeeCount;
+        this.personalIdCode = personalIdCode;
+        this.companyRegistrationCode = companyRegistrationCode;
+        this.type = type;
     }
 
 }

@@ -16,6 +16,8 @@ public static class AttendeeMapper
                 dto.PersonalIdCode,
                 dto.PaymentMethodId,
                 dto.AdditionalInfo,
+                null,
+                null,
                 null
             ),
             AttendeeType.LegalEntity => new LegalEntityAttendee(
@@ -26,6 +28,8 @@ public static class AttendeeMapper
                 dto.PaymentMethodId,
                 dto.AdditionalInfo,
                 dto.ParticipantRequests,
+                null,
+                null,
                 null
             ),
             _ => throw new ArgumentException("Invalid attendee types")

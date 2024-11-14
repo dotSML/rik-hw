@@ -1,4 +1,4 @@
-const RadioField = ({ options, selectedValue, onChange, className }) => {
+const RadioField = ({ options, selectedValue, onChange, className, name }) => {
     const handleOptionChange = (event) => {
         onChange(event.target.value);
     };

@@ -5,6 +5,6 @@ interface Action {
 }
 export function ActionGroup({ actions }: { actions: Action[] }) {
     return <div className="flex gap-2">
-        {actions.map((action) => <Button disabled={action.isDisabled} variant={action.variant} title={action.title} onClick={action.onClick} />)}
+        {actions.map((action, idx) => <Button key={"action-" + idx }  disabled={action.isDisabled} variant={action.variant} title={action.title} onClick={action.onClick} />)}
     </div>
 }

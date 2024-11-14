@@ -60,8 +60,8 @@ namespace api.Infrastructure.Repositories
         {
             return attendee switch
             {
-                NaturalPersonAttendee naturalPerson => new NaturalPersonAttendeeEntity(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.AttendeeId, EventRepository.MapToEntity(naturalPerson.Event), PaymentMethodRepository.MapToEntity(naturalPerson.PaymentMethod)),
-                LegalEntityAttendee legalEntity => new LegalEntityAttendeeEntity(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.AttendeeId, EventRepository.MapToEntity(legalEntity.Event), PaymentMethodRepository.MapToEntity(legalEntity.PaymentMethod)),
+                NaturalPersonAttendee naturalPerson => new NaturalPersonAttendeeEntity(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.AttendeeId, naturalPerson.Event != null ? EventRepository.MapToEntity(naturalPerson.Event) : null,naturalPerson.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(naturalPerson.PaymentMethod) : null),
+                LegalEntityAttendee legalEntity => new LegalEntityAttendeeEntity(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.AttendeeId, legalEntity.Event != null ? EventRepository.MapToEntity(legalEntity.Event) : null, legalEntity.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(legalEntity.PaymentMethod) : null),
                 _ => throw new ArgumentException("Unknown attendee type")
             };
         }
@@ -70,8 +70,8 @@ namespace api.Infrastructure.Repositories
         {
             return attendeeEntity switch
             {
-                NaturalPersonAttendeeEntity naturalPerson => new NaturalPersonAttendee(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.Id, EventRepository.MapToDomainModel(naturalPerson.Event), PaymentMethodRepository.MapToDomainModel(naturalPerson.PaymentMethod)),
-                LegalEntityAttendeeEntity legalEntity => new LegalEntityAttendee(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.Id, EventRepository.MapToDomainModel(legalEntity.Event), PaymentMethodRepository.MapToDomainModel(legalEntity.PaymentMethod)),
+                NaturalPersonAttendeeEntity naturalPerson => new NaturalPersonAttendee(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.Id, naturalPerson.Event != null ? EventRepository.MapToDomainModel(naturalPerson.Event) : null, naturalPerson.PaymentMethod != null ? PaymentMethodRepository.MapToDomainModel(naturalPerson.PaymentMethod) : null),
+                LegalEntityAttendeeEntity legalEntity => new LegalEntityAttendee(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.Id, legalEntity.Event != null ? EventRepository.MapToDomainModel(legalEntity.Event) : null, legalEntity.PaymentMethod != null ? PaymentMethodRepository.MapToDomainModel(legalEntity.PaymentMethod) : null),
                 _ => throw new ArgumentException("Unknown attendee type")
             };
         }

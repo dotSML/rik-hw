@@ -12,23 +12,29 @@ import { ActionGroup } from "../presentation/components/action-group.component";
 import { createAttendee } from "../application/use-cases/create-attendee.use-case";
 import { PaymentMethodModel } from "../domain/models/payment-method.model";
 import { getPaymentMethods } from "../application/use-cases/fetch-payment-methods.use-case";
+import { AttendeeType } from "../application/NewFolder1/attendee-type";
+import { required } from "../application/NewFolder/validators";
 
 export function AttendeesRoute() {
+    const { eventId } = useParams();
+    const [isCreateAttendeeLoading, setIsCreateAttendeeLoading] = useState(false);
+
     const initialValues = {
         firstName: "",
        lastName: "",
-        personalCode: "",
-        paymentMethod: "",
-        additionalInfo: ""
-
+        personalIdCode: "",
+        paymentMethodId: "",
+        additionalInfo: "",
+        type: AttendeeType.NaturalPerson,
+        eventId
     }
 
     const validators = {
+        firstName: required
     };
-    const { eventId } = useParams();
     const [eventDetails, setEventDetails] = useState<EventModel>();
     const [attendees, setAttendees] = useState<AttendeeModel[]>([]);
-    const [paymentMethods, setPaymentMethods] = useState<PaymentMethodModel>([]);
+    const [paymentMethods, setPaymentMethods] = useState<PaymentMethodModel[]>([]);
 
     useEffect(() => {
         const fetchEventDetailsData = async () => {
@@ -61,12 +67,22 @@ export function AttendeesRoute() {
 
     const form = useForm(initialValues, validators)
 
-    const postSubmit = async (data: any) => {
-        console.log(data)
-        const res = await createAttendee(data);
+    const postSubmit = async (data: AttendeeModel) => {
+        console.log('data - ', data);
+        setIsCreateAttendeeLoading(true);
+        await createAttendee(data);
 
-        console.log("Attendee created -", res);
+        setIsCreateAttendeeLoading(false);
+        setAttendees((prev) => [...prev, data])
     }
+
+    useEffect(() => {
+        console.log(attendees)
+    }, [attendees])
+
+    useEffect(() => {
+        console.log("ISVALID - ", form.isValid, form.errors)
+    }, [form.isValid])
 
 
     const onSubmit = form.handleSubmit(postSubmit)
@@ -84,8 +100,8 @@ export function AttendeesRoute() {
             <div className="w-[50%]">
                 <h3 className="text-primaryBlue text-2xl mb-8">Osavõtjate lisamine</h3>
                 <AddAttendeeForm {...form} paymentMethods={paymentMethods} />
-                <ActionGroup actions={[{title: "Tagasi", variant: 'secondary', onClick:() => { }}
-                    , { title: "Lisa", variant: 'primary', onClick: onSubmit } ] } />
+                <ActionGroup actions={[{ title: "Tagasi", variant: 'secondary', onClick: () => { } }
+                    , { title: "Lisa", variant: 'primary', onClick: onSubmit, isDisabled: !form.isValid || isCreateAttendeeLoading }]} />
             </div>
         </div>
     </PageWrapper>
