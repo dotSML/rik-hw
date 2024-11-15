@@ -9,7 +9,8 @@ namespace api.Application.DTOs
         public Guid? Id { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public PaymentMethod PaymentMethod { get; set; }
+        public Guid PaymentMethodId { get; set; }
+        public PaymentMethod? PaymentMethod { get; set; }
         public string? AdditionalInfo { get; set; }
         public string? ParticipantRequests { get; set; }
         public string? PersonalIdCode { get; set; }
@@ -18,7 +19,8 @@ namespace api.Application.DTOs
         public int? AttendeeCount { get; set; }
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AttendeeType Type { get; set; }
-        public EventDto @Event { get; set; }
+        public Guid EventId { get; set; }
+        public EventDto? @Event { get; set; }
 
         public AttendeeDto()
         {

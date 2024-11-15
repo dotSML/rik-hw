@@ -1,9 +1,10 @@
+using api.Domain.DTOs;
 using api.Domain.Enums;
 using System.Text.Json.Serialization;
 
 namespace api.Application.DTOs
 {
-    public class CreateAttendeeDto
+    public class CreateAttendeeDto : AttendeeDto
     {
         [RequiredIfType(AttendeeType.NaturalPerson)]
         public string? FirstName { get; set; } = string.Empty;
@@ -20,7 +21,7 @@ namespace api.Application.DTOs
         public string? LegalName { get; set; } = string.Empty;
         [RequiredIfType(AttendeeType.LegalEntity)]
         public string? CompanyRegistrationCode { get; set; } = string.Empty;
-        public int AttendeeCount { get; set; }
+        public int? AttendeeCount { get; set; }
         [JsonConverter(typeof(JsonStringEnumConverter))]
         public AttendeeType Type { get; set; }
     }

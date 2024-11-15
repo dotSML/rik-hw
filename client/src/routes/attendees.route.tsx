@@ -76,19 +76,7 @@ export function AttendeesRoute() {
         setAttendees((prev) => [...prev, data])
     }
 
-    useEffect(() => {
-        console.log(attendees)
-    }, [attendees])
-
-    useEffect(() => {
-        console.log("ISVALID - ", form.isValid, form.errors)
-    }, [form.isValid])
-
-
     const onSubmit = form.handleSubmit(postSubmit)
-
-
-
 
     return <PageWrapper title="Osavõtjad">
         <div className="flex flex-col w-full gap-12 pb-32">

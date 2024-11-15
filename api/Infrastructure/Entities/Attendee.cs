@@ -29,9 +29,9 @@ namespace api.Infrastructure.Entities
     {
         public NaturalPersonAttendeeEntity() { }
 
-        public string FirstName { get; protected set; }
-        public string LastName { get; protected set; }
-        public string PersonalIdCode { get; private set; }
+        public string FirstName { get;  set; }
+        public string LastName { get; set; }
+        public string PersonalIdCode { get; set; }
 
         public NaturalPersonAttendeeEntity(Guid eventId, string firstName, string lastName, string personalIdCode, Guid paymentMethodId, string additionalInfo, Guid? id, EventEntity eventEntity, PaymentMethodEntity paymentMethodEntity)
             : base(id, eventId, paymentMethodId,
@@ -46,10 +46,10 @@ namespace api.Infrastructure.Entities
     public class LegalEntityAttendeeEntity : AttendeeEntity
     {
         public LegalEntityAttendeeEntity() { }
-        public string LegalName { get; private set; }
-        public string CompanyRegistrationCode { get; private set; }
-        public int AttendeeCount { get; private set; }
-        public string ParticipantRequests { get; private set; } = string.Empty;
+        public string LegalName { get; set; }
+        public string CompanyRegistrationCode { get; set; }
+        public int AttendeeCount { get; set; }
+        public string ParticipantRequests { get; set; } = string.Empty;
 
 
         public LegalEntityAttendeeEntity(Guid eventId, string legalName, string registrationCode, int attendeeCount,

@@ -38,12 +38,37 @@ namespace api.Infrastructure.Repositories
             return MapToDomainModel(addedAttendee.Entity);
         }
 
-        public async Task UpdateAsync(Attendee attendee)
+        public async Task<Attendee> UpdateAsync(Attendee attendee)
         {
-            var entity = MapToEntity(attendee);
-            _context.Attendees.Update(entity);
+            var trackedEntity = await _context.Attendees.FindAsync(attendee.AttendeeId);
+
+            if (trackedEntity == null)
+            {
+                throw new InvalidOperationException("Attendee not found.");
+            }
+
+            if (trackedEntity is NaturalPersonAttendeeEntity naturalEntity && attendee is NaturalPersonAttendee naturalDomain)
+            {
+                naturalEntity.FirstName = naturalDomain.FirstName;
+                naturalEntity.LastName = naturalDomain.LastName;
+                naturalEntity.PersonalIdCode = naturalDomain.PersonalIdCode;
+            }
+            else if (trackedEntity is LegalEntityAttendeeEntity legalEntity && attendee is LegalEntityAttendee legalDomain)
+            {
+                legalEntity.LegalName = legalDomain.LegalName;
+                legalEntity.CompanyRegistrationCode = legalDomain.CompanyRegistrationCode;
+                legalEntity.AttendeeCount = legalDomain.AttendeeCount;
+            }
+            else
+            {
+                throw new InvalidOperationException("Mismatched attendee types.");
+            }
+
             await _context.SaveChangesAsync();
+
+            return MapToDomainModel(trackedEntity);
         }
+
 
         public async Task DeleteAsync(Guid attendeeId)
         {

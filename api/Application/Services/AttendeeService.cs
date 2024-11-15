@@ -17,7 +17,7 @@ public class AttendeeService : IAttendeeService
 
     public async Task<Guid> CreateAttendeeAsync(CreateAttendeeDto dto)
     { 
-        var newAttendee = dto.ToAttendeeFromCreate();
+        var newAttendee = dto.ToModelFromDto();
 
         var createdAttendee = await _attendeeRepository.AddAsync(newAttendee);
 
@@ -58,6 +58,19 @@ public class AttendeeService : IAttendeeService
 
         return attendee.ToDto();
     }
+
+    public async Task<AttendeeDto> UpdateByIdAsync(Guid attendeeId, UpdateAttendeeDto dto)
+    {
+        var attendee = await _attendeeRepository.GetByIdAsync(attendeeId);
+
+        AssertionHelper.AssertExistsAndOfType<Attendee>(attendee);
+
+
+        await _attendeeRepository.UpdateAsync(dto.MergeUpdateDtoIntoEntity(attendee));
+
+        return attendee.ToDto();
+    }
+
 
 
 

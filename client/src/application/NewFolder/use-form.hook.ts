@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-const useForm = (initialValues, validators = {}) => {
+const useForm = (initialValues: Record<string, string>, validators: {[key:string]: (value: string) => string}  = {}) => {
     const [values, setValues] = useState(initialValues);
     const [errors, setErrors] = useState({});
     const [isTouched, setIsTouched] = useState(false);
@@ -24,7 +24,6 @@ const useForm = (initialValues, validators = {}) => {
 
         if (validators[name]) {
             const error = validators[name](value);
-            console.log('set validators', error);
             setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
         }
     };
@@ -42,8 +41,7 @@ const useForm = (initialValues, validators = {}) => {
         }
     };
 
-    const handleSubmit = (submitCallback) => () => {
-        console.log("SUBMIT");
+    const handleSubmit = (submitCallback: () => void) => () => {
         const newErrors = {};
 
         Object.keys(validators).forEach((field) => {
@@ -60,7 +58,7 @@ const useForm = (initialValues, validators = {}) => {
         }
     };
 
-    return { isValid, values, errors, handleChange, handleBlur, handleSubmit };
+    return { isValid, values, errors, handleChange, handleBlur, handleSubmit, setValues };
 };
 
 export default useForm;

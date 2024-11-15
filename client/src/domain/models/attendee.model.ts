@@ -11,8 +11,9 @@ export class AttendeeModel  {
     public participantRequests?: string;
     public attendeeCount?: number;
     public personalIdCode?: string;
+    public paymentMethodId?: string;
     public type: "NaturalPerson" | "LegalEntity"
-    constructor({ id, type, additionalInfo, participantRequests, attendeeCount, legalName, firstName, lastName, personalIdCode, companyRegistrationCode }: { id: string, type: "NaturalPerson" | "LegalEntity", firstName?: string, lastName?: string, personalIdCode?: string, companyRegistryCode?: string, legalName?: string, participantRequests?: string, additionalInfo?: string, attendeeCount?: number }) {
+    constructor({ id, paymentMethodId, type, additionalInfo, participantRequests, attendeeCount, legalName, firstName, lastName, personalIdCode, companyRegistrationCode }: { id: string, type: "NaturalPerson" | "LegalEntity", firstName?: string, lastName?: string, personalIdCode?: string, companyRegistryCode?: string, legalName?: string, participantRequests?: string, additionalInfo?: string, attendeeCount?: number, companyRegistrationCode?: string, paymentMethodId?: string }) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -23,6 +24,7 @@ export class AttendeeModel  {
         this.personalIdCode = personalIdCode;
         this.companyRegistrationCode = companyRegistrationCode;
         this.type = type;
+        this.paymentMethodId = paymentMethodId;
     }
 
 }

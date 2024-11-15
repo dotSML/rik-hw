@@ -41,5 +41,19 @@ namespace api.API.Controllers
             }
 
         }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdateAttendee([FromRoute] Guid id, [FromBody] UpdateAttendeeDto dto)
+        {
+            try
+            {
+                await _attendeeService.UpdateByIdAsync(id, dto);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
     }
 }
