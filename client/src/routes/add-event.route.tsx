@@ -1,13 +1,14 @@
 import { AddEventForm } from "../presentation/components/add-event.form";
-import { Button } from "../presentation/components/button.component";
 import { PageWrapper } from "../presentation/components/page-wrapper.component";
 import { createEvent } from "../application/use-cases/create-event.use-case";
-import useForm from "../application/NewFolder/use-form.hook";
-import { required } from "../application/NewFolder/validators";
+import useForm from "../application/hooks/use-form.hook";
+import { required } from "../application/hooks/validators";
 import { ActionGroup } from "../presentation/components/action-group.component";
+import { useNavigate } from "react-router-dom";
 
 export function AddEventRoute()
 {
+    const navigate = useNavigate();
     const initialValues = {
         name: "",
         date: "",
@@ -20,17 +21,14 @@ export function AddEventRoute()
         name: required,
         date: required,
         location: required,
-        additionalInfo: required
     };
 
 
     const { isValid, values, errors, handleChange, handleBlur, handleSubmit } = useForm(initialValues, validators);
 
     const postSubmit = async (data: any) => {
-        console.log(data)
-        const res = await createEvent(data);
-
-        console.log("Event created -", res);
+        await createEvent(data);
+        navigate('/')
     }
 
     const onSubmit = handleSubmit(postSubmit)
@@ -38,6 +36,7 @@ export function AddEventRoute()
 
     return <PageWrapper title="Ürituse lisamine">
         <div className="flex flex-col p-8">
+        <h3 className="text-primaryBlue text-2xl mb-8">Ürituse lisamine</h3>
             <AddEventForm values={values} errors={errors} handleChange={handleChange} handleBlur={handleBlur} />
             <div className="mt-8">
                 <ActionGroup actions={[

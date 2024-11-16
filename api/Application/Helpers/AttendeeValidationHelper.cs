@@ -1,24 +1,38 @@
-using api.Application.DTOs;
 using api.Domain.Enums;
 using System.ComponentModel.DataAnnotations;
 
-public class RequiredIfTypeAttribute : ValidationAttribute
+namespace api.Application.DTOs
 {
-    private readonly AttendeeType _requiredType;
-    public RequiredIfTypeAttribute(AttendeeType requiredType)
+    [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
+    public class RequiredIfTypeAttribute : ValidationAttribute
     {
-        _requiredType = requiredType;
-    }
+        private readonly AttendeeType _requiredType;
 
-    protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-    {
-        var dto = (CreateAttendeeDto)validationContext.ObjectInstance;
-
-        if (dto.Type == _requiredType && value == null)
+        public RequiredIfTypeAttribute(AttendeeType requiredType)
         {
-            return new ValidationResult($"{validationContext.DisplayName} is required when Type is {_requiredType}.");
+            _requiredType = requiredType;
         }
 
-        return ValidationResult.Success;
+        protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
+        {
+            var instance = validationContext.ObjectInstance;
+            var typeProperty = validationContext.ObjectType.GetProperty("Type");
+
+            if (typeProperty == null)
+            {
+                return new ValidationResult($"Type property not found on {validationContext.ObjectType.Name}");
+            }
+
+            var typeValue = typeProperty.GetValue(instance);
+            if (typeValue is AttendeeType attendeeType && attendeeType == _requiredType)
+            {
+                if (value == null || (value is string str && string.IsNullOrWhiteSpace(str)))
+                {
+                    return new ValidationResult($"The {validationContext.MemberName} field is required for {attendeeType}.");
+                }
+            }
+
+            return ValidationResult.Success;
+        }
     }
 }

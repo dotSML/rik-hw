@@ -47,6 +47,8 @@ namespace api.Infrastructure.Repositories
                 throw new InvalidOperationException("Attendee not found.");
             }
 
+            trackedEntity.PaymentMethodId = attendee.PaymentMethodId;
+
             if (trackedEntity is NaturalPersonAttendeeEntity naturalEntity && attendee is NaturalPersonAttendee naturalDomain)
             {
                 naturalEntity.FirstName = naturalDomain.FirstName;

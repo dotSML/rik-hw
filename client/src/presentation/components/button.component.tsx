@@ -1,6 +1,6 @@
 type ButtonProps = {
     title: string;
-    variant?: 'primary' | 'secondary' | 'danger';
+    variant?: 'primary' | 'secondary' | 'danger' | 'text';
     type?: 'button' | 'submit' | 'reset';
     onClick?: () => void;
     disabled?: boolean;
@@ -20,6 +20,9 @@ export function Button({ title, variant = 'primary', type = 'button', onClick, d
                 break;
             case 'danger':
                 variantClasses = "bg-red-500 text-white hover:bg-red-600";
+                break;
+            case 'text':
+                variantClasses = "bg-transparent text-text-primary hover:text-text-secondary";
                 break;
             default:
                 variantClasses = "bg-blue-500 text-white hover:bg-blue-600";

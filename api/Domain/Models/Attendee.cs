@@ -1,5 +1,3 @@
-using api.Domain.Enums;
-
 namespace api.Domain.Models
 {
     public class Attendee
@@ -13,7 +11,7 @@ namespace api.Domain.Models
 
         public PaymentMethod? PaymentMethod { get; protected set; }
 
-       
+
 
         protected Attendee() { }
 
@@ -48,7 +46,7 @@ namespace api.Domain.Models
 
         public NaturalPersonAttendee(Guid eventId, string firstName, string lastName, string personalIdCode, Guid paymentMethodId, string additionalInfo, Guid? id, Event? @event, PaymentMethod? paymentMethod)
             : base(eventId, paymentMethodId,
-                   additionalInfo.Length <= 1500 ? additionalInfo : throw new ArgumentException("Additional info exceeds 1500 characters for a natural person"), id, @event, paymentMethod)
+                   additionalInfo?.Length <= 1500 ? additionalInfo : throw new ArgumentException("Additional info exceeds 1500 characters for a natural person"), id, @event, paymentMethod)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -77,13 +75,13 @@ namespace api.Domain.Models
         public string LegalName { get; protected set; }
         public string CompanyRegistrationCode { get; protected set; }
         public int AttendeeCount { get; protected set; }
-        public string ParticipantRequests { get; protected set; } = string.Empty;
+        public string? ParticipantRequests { get; protected set; } = string.Empty;
 
 
         public LegalEntityAttendee(Guid eventId, string legalName, string registrationCode, int attendeeCount,
                                    Guid paymentMethodId, string additionalInfo, string participantRequests, Guid? id, Event? @event, PaymentMethod? paymentMethod)
             : base(eventId, paymentMethodId,
-                   additionalInfo.Length <= 5000 ? additionalInfo : throw new ArgumentException("Additional info exceeds 5000 characters for a legal entity"), id, @event, paymentMethod)
+                   additionalInfo?.Length <= 5000 ? additionalInfo : throw new ArgumentException("Additional info exceeds 5000 characters for a legal entity"), id, @event, paymentMethod)
         {
             LegalName = legalName;
             CompanyRegistrationCode = registrationCode;

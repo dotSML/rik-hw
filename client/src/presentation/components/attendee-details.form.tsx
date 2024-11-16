@@ -1,4 +1,4 @@
-import { AttendeeType } from "../../application/NewFolder1/attendee-type";
+import { AttendeeType } from "../../application/types/attendee-type";
 import { AttendeeModel } from "../../domain/models/attendee.model";
 import { PaymentMethodModel } from "../../domain/models/payment-method.model";
 import { FormField } from "./form-field.component";
@@ -10,7 +10,7 @@ export function AttendeeDetailsForm({
     handleBlur,
     paymentMethods
 }: {
-    values: Partial<AttendeeModel>;
+    values: Record<keyof AttendeeModel, string>;
     errors: Record<string, string>;
     handleChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     handleBlur: (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
@@ -31,12 +31,12 @@ export function AttendeeDetailsForm({
         name: "legalName", label: "Ettevõtte nimi",
 
     }, {
-        name: 'paymentMethod', label: "Maksemeetod", type: "select"
+        name: 'paymentMethodId', label: "Maksemeetod", type: "select", options: paymentMethods.map((pm) => ({label: pm.method, value: pm.id}))
         }, {
             name: "companyRegistrationCode", label: "Registrikood"
         },
         {
-            name: "attendeeCount", label: "Osalejate arv"
+            name: "attendeeCount", type: "number", label: "Osalejate arv"
         },
         {
             name: "additionalInfo", label: "Lisainfo", type:
@@ -48,7 +48,7 @@ export function AttendeeDetailsForm({
     return (
         <form className="flex flex-col gap-4 w-full max-w-lg">
             {(values.type === AttendeeType.NaturalPerson ? naturalPersonFields : legalEntityFields).map((field, idx) => {
-            return <FormField key={ "attendee-form-" + idx} type={field.type} options={ field.options } label={field.label} name={field.name} value={values[name]} onChange={handleChange} onBlur={handleBlur} error={errors[name]} />
+            return <FormField key={ "attendee-form-" + idx} type={field.type} options={ field.options } label={field.label} name={field.name} value={values[field.name as keyof AttendeeModel]} onChange={handleChange} onBlur={handleBlur} error={errors[field.name]} />
         }) }
         </form>
     );

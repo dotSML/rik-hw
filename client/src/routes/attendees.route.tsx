@@ -7,13 +7,13 @@ import { EventModel } from "../domain/models/event.model";
 import { AttendeeModel } from "../domain/models/attendee.model";
 import { fetchEventAttendees } from "../infrastructure/api/attendee.api";
 import { AddAttendeeForm } from "../presentation/components/add-attendee-form.component";
-import useForm from "../application/NewFolder/use-form.hook";
+import useForm from "../application/hooks/use-form.hook";
 import { ActionGroup } from "../presentation/components/action-group.component";
 import { createAttendee } from "../application/use-cases/create-attendee.use-case";
 import { PaymentMethodModel } from "../domain/models/payment-method.model";
 import { getPaymentMethods } from "../application/use-cases/fetch-payment-methods.use-case";
-import { AttendeeType } from "../application/NewFolder1/attendee-type";
-import { required } from "../application/NewFolder/validators";
+import { AttendeeType } from "../application/types/attendee-type";
+import { required } from "../application/hooks/validators";
 
 export function AttendeesRoute() {
     const { eventId } = useParams();
@@ -26,12 +26,18 @@ export function AttendeesRoute() {
         paymentMethodId: "",
         additionalInfo: "",
         type: AttendeeType.NaturalPerson,
+        participantRequests: "",
+        attendeeCount: undefined,
+        legalName: "",
+        companyRegistrationCode: "",
         eventId
     }
 
     const validators = {
         firstName: required
     };
+    const form = useForm(initialValues, validators)
+
     const [eventDetails, setEventDetails] = useState<EventModel>();
     const [attendees, setAttendees] = useState<AttendeeModel[]>([]);
     const [paymentMethods, setPaymentMethods] = useState<PaymentMethodModel[]>([]);
@@ -64,13 +70,35 @@ export function AttendeesRoute() {
             
     }, [eventId]);
 
+    useEffect(() => {
+        const type = form.values.type;
+        const newValidators =
+          type === AttendeeType.NaturalPerson
+            ? {
+                firstName: required,
+                lastName: required,
+              }
+            : {
+                legalName: required,
+                companyRegistrationCode: required,
+              };
+              console.log("Type", type);
+        form.setValidators(newValidators);
+      }, [form.values.type]);
 
-    const form = useForm(initialValues, validators)
+      useEffect(() => {
+        console.log("Form values", form.values);
+      }, [form.values])
+
+
 
     const postSubmit = async (data: AttendeeModel) => {
-        console.log('data - ', data);
+        data.eventId = eventId;
+        data.attendeeCount = data.attendeeCount ? Number(data.attendeeCount) : undefined;
+        console.log("Data", data);
         setIsCreateAttendeeLoading(true);
-        await createAttendee(data);
+        const id = await createAttendee(data);
+        data.id = id;
 
         setIsCreateAttendeeLoading(false);
         setAttendees((prev) => [...prev, data])

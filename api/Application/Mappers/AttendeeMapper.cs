@@ -76,7 +76,7 @@ public static class AttendeeMapper
         {
             Id = attendee.AttendeeId,
             PaymentMethodId = attendee.PaymentMethodId,
-            PaymentMethod = attendee.PaymentMethod,
+            PaymentMethod = attendee.PaymentMethod?.MapToDto(),
             AdditionalInfo = attendee.AdditionalInfo,
             FirstName = string.Empty,
             LastName = string.Empty,

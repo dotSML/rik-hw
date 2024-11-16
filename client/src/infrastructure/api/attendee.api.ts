@@ -23,7 +23,7 @@ export const fetchAttendeById = async (id: string) => {
 
 export const postAttendee = async (data: AttendeeModel) => {
     try {
-        const response = await axios.post(`http://localhost:5220/api/attendees`, data);
+        const response = await axios.post(`http://localhost:5220/api/attendees`, AttendeeModel.toPlain(data));
         return response.data;
     } catch (e) {
         console.error(e);
@@ -33,7 +33,7 @@ export const postAttendee = async (data: AttendeeModel) => {
 
 export const patchAttendee = async (id: string, data: Partial<AttendeeModel>) => {
     try {
-        const response = await axios.patch(`http://locahost:5220/api/attendees/${id}`, data);
+        const response = await axios.patch(`http://localhost:5220/api/attendees/${id}`, data);
         return response.data;
     } catch (e) {
         console.error(e)

@@ -8,6 +8,7 @@ const RadioField = ({ options, selectedValue, onChange, className, name }) => {
             {options.map((option) => (
                 <label key={option.value} className="ml-2">
                     <input
+                        name={name}
                         type="radio"
                         value={option.value}
                         checked={selectedValue === option.value}

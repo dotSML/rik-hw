@@ -1,6 +1,8 @@
-import { AttendeeType } from "../../application/NewFolder1/attendee-type"
+import { useNavigate } from "react-router-dom"
+import { AttendeeType } from "../../application/types/attendee-type"
 import { AttendeeModel } from "../../domain/models/attendee.model"
 import { EventModel } from "../../domain/models/event.model"
+import { Button } from "./button.component"
 
 function EventAttribute({ label, value, customValue }: { label: string, value?: string, customValue?: ReactNode }) {
     return <div className="grid grid-cols-2 gap-8">
@@ -9,14 +11,15 @@ function EventAttribute({ label, value, customValue }: { label: string, value?: 
 }
 
 function AttendeeItem({ data, index }: { data: AttendeeModel, index: number }) {
+    const navigate = useNavigate();
 
-    return <div className="flex justify-between w-full">
+    return <div className="flex justify-between items-center w-full whitespace-nowrap gap-4">
 
         <p>{index}.{data.type === AttendeeType.NaturalPerson ? `${data.firstName} ${data.lastName}` : data.legalName}</p>
         <p>{data.type === AttendeeType.NaturalPerson ? data.personalIdCode : data.companyRegistrationCode}</p>
         <div className='flex'>
-            <button>VAATA</button>
-            <button>KUSTUTA</button>
+            <Button variant="text" onClick={() => navigate(`/attendees/${data.id}`)} title="VAATA" />
+            <Button variant="text" onClick={() => { }} title="KUSTUTA" />
 
         </div>
     </div>
@@ -32,14 +35,13 @@ export function EventDetails({ eventData, attendees }: { eventData: EventModel, 
             
         </div>
         <div className="flex w-full">
-            <div className="basis-[50%]"></div>
 
-            <div className="w-[40rem]">
+            <div className="ml-8 mt-6">
                 {attendees.length
                     ? attendees.map((a, idx) => (
                         <AttendeeItem index={idx + 1} key={a.personalIdCode + idx} data={a} />
                     ))
-                    : <p>No attendees available</p>}              </div>
+                    : <p>Osavõtjad puuduvad</p>}              </div>
         </div>
     </div>
 }

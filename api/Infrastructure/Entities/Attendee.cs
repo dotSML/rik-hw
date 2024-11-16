@@ -7,8 +7,8 @@ namespace api.Infrastructure.Entities
         
         public Guid EventId { get; protected set; }
         public EventEntity Event { get; protected set; }
-        public string? AdditionalInfo { get; protected set; }
-        public Guid PaymentMethodId { get; protected set; }
+        public string? AdditionalInfo { get; protected set; } = string.Empty;
+        public Guid PaymentMethodId { get; set; }
 
         public PaymentMethodEntity PaymentMethod { get; protected set; }
 
@@ -35,7 +35,7 @@ namespace api.Infrastructure.Entities
 
         public NaturalPersonAttendeeEntity(Guid eventId, string firstName, string lastName, string personalIdCode, Guid paymentMethodId, string additionalInfo, Guid? id, EventEntity eventEntity, PaymentMethodEntity paymentMethodEntity)
             : base(id, eventId, paymentMethodId,
-                   additionalInfo.Length <= 1500 ? additionalInfo : throw new ArgumentException("Additional info exceeds 1500 characters for a natural person"), eventEntity, paymentMethodEntity)
+                   additionalInfo?.Length <= 1500 ? additionalInfo : throw new ArgumentException("Additional info exceeds 1500 characters for a natural person"), eventEntity, paymentMethodEntity)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -55,7 +55,7 @@ namespace api.Infrastructure.Entities
         public LegalEntityAttendeeEntity(Guid eventId, string legalName, string registrationCode, int attendeeCount,
                                    Guid paymentMethodId, string additionalInfo, string participantRequests, Guid? id, EventEntity eventEntity, PaymentMethodEntity paymentMethodEntity)
             : base(id, eventId, paymentMethodId,
-                   additionalInfo.Length <= 5000 ? additionalInfo : throw new ArgumentException("Additional info exceeds 5000 characters for a legal entity"), eventEntity, paymentMethodEntity)
+                   additionalInfo?.Length <= 5000 ? additionalInfo : throw new ArgumentException("Additional info exceeds 5000 characters for a legal entity"), eventEntity, paymentMethodEntity)
         {
             LegalName = legalName;
             CompanyRegistrationCode = registrationCode;
