@@ -9,13 +9,6 @@ Welcome to the client application of rik-hw event management system.
 - [Prerequisites](#prerequisites)
 - [Installation](#installation)
 - [Project Structure](#project-structure)
-- [Domain Model](#domain-model)
-- [Architecture Overview](#architecture-overview)
-- [Usage](#usage)
-- [API Interaction](#api-interaction)
-- [Configuration](#configuration)
-- [Testing](#testing)
-- [Contributing](#contributing)
 - [License](#license)
 
 ## Prerequisites

@@ -33,9 +33,9 @@ This is the backend API for the rik-hw project. It provides RESTful endpoints fo
 
 ## Technologies
 
-- **.NET 6 (or later)**: Framework for building the API.
+- **.NET 8**: Framework for building the API.
 - **Entity Framework Core**: ORM for database operations.
-- **SQL Server**: Default database provider (can be replaced).
+- **SQLLite**: Lightweight database provider.
 - **Swagger**: For API documentation.
 - **xUnit**: Unit testing framework.
 
