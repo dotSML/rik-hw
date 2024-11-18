@@ -1,8 +1,8 @@
 # RIK homework task
 
 This repository contains:
-1. [API (`/src/Api`)](src/api/README.md): Backend built with .NET 8.
-2. [Client (`/src/Client`)](src/client/README.md): Frontend built with React.
+1. [API (`/api`)](api/README.md): Backend built with .NET 8.
+2. [Client (`/client`)](client/README.md): Frontend built with React.
 
 ## Quickstart
 
