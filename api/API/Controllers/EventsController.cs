@@ -36,5 +36,19 @@ namespace api.API.Controllers
             var events = await _eventService.GetAllEventsAsync(status);
             return Ok(events);
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteEvent([FromRoute] Guid id)
+        {
+            try
+            {
+                await _eventService.DeleteEventByIdAsync(id);
+                return Ok(true);
+            }
+            catch
+            {
+                return NotFound();
+            }
+        }
     }
 }

@@ -55,7 +55,7 @@ namespace api.Infrastructure.Repositories
                 naturalEntity.LastName = naturalDomain.LastName;
                 naturalEntity.PersonalIdCode = naturalDomain.PersonalIdCode;
             }
-            else if (trackedEntity is LegalEntityAttendeeEntity legalEntity && attendee is LegalEntityAttendee legalDomain)
+            else if (trackedEntity is LegalAttendeeEntity legalEntity && attendee is LegalEntityAttendee legalDomain)
             {
                 legalEntity.LegalName = legalDomain.LegalName;
                 legalEntity.CompanyRegistrationCode = legalDomain.CompanyRegistrationCode;
@@ -72,23 +72,26 @@ namespace api.Infrastructure.Repositories
         }
 
 
-        public async Task DeleteAsync(Guid attendeeId)
+        public async Task<bool> DeleteAsync(Guid attendeeId)
         {
-            var attendee = await GetByIdAsync(attendeeId);
-            if (attendee != null)
+            var attendee = await _context.Attendees.FindAsync(attendeeId);
+            if (attendee == null)
             {
-                var entity = MapToEntity(attendee);
-                _context.Attendees.Remove(entity);
-                await _context.SaveChangesAsync();
+                return false;
             }
+
+            _context.Attendees.Remove(attendee);
+            await _context.SaveChangesAsync();
+            return true;
         }
+
 
         public static AttendeeEntity MapToEntity(Attendee attendee)
         {
             return attendee switch
             {
                 NaturalPersonAttendee naturalPerson => new NaturalPersonAttendeeEntity(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.AttendeeId, naturalPerson.Event != null ? EventRepository.MapToEntity(naturalPerson.Event) : null,naturalPerson.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(naturalPerson.PaymentMethod) : null),
-                LegalEntityAttendee legalEntity => new LegalEntityAttendeeEntity(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.AttendeeId, legalEntity.Event != null ? EventRepository.MapToEntity(legalEntity.Event) : null, legalEntity.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(legalEntity.PaymentMethod) : null),
+                LegalEntityAttendee legalEntity => new LegalAttendeeEntity(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.AttendeeId, legalEntity.Event != null ? EventRepository.MapToEntity(legalEntity.Event) : null, legalEntity.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(legalEntity.PaymentMethod) : null),
                 _ => throw new ArgumentException("Unknown attendee type")
             };
         }
@@ -98,7 +101,7 @@ namespace api.Infrastructure.Repositories
             return attendeeEntity switch
             {
                 NaturalPersonAttendeeEntity naturalPerson => new NaturalPersonAttendee(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.Id, naturalPerson.Event != null ? EventRepository.MapToDomainModel(naturalPerson.Event) : null, naturalPerson.PaymentMethod != null ? PaymentMethodRepository.MapToDomainModel(naturalPerson.PaymentMethod) : null),
-                LegalEntityAttendeeEntity legalEntity => new LegalEntityAttendee(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.Id, legalEntity.Event != null ? EventRepository.MapToDomainModel(legalEntity.Event) : null, legalEntity.PaymentMethod != null ? PaymentMethodRepository.MapToDomainModel(legalEntity.PaymentMethod) : null),
+                LegalAttendeeEntity legalEntity => new LegalEntityAttendee(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.Id, legalEntity.Event != null ? EventRepository.MapToDomainModel(legalEntity.Event) : null, legalEntity.PaymentMethod != null ? PaymentMethodRepository.MapToDomainModel(legalEntity.PaymentMethod) : null),
                 _ => throw new ArgumentException("Unknown attendee type")
             };
         }

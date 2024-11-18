@@ -1,6 +1,8 @@
 
 using api.Application.DTOs;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
+using System.Data;
 
 namespace api.API.Controllers
 {
@@ -35,7 +37,7 @@ namespace api.API.Controllers
                 var attendeeId = await _attendeeService.CreateAttendeeAsync(dto);
                 return Ok(attendeeId);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 return BadRequest();
             }
@@ -55,5 +57,20 @@ namespace api.API.Controllers
                 return BadRequest();
             }
         }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAttendee([FromRoute] Guid id)
+        {
+            try
+            {
+                await _attendeeService.DeleteByIdAsync(id);
+                return Ok(true);
+            }
+            catch (Exception e)
+            {
+                return BadRequest();
+            }
+        }
+
     }
 }

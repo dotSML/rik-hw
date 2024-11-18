@@ -18,7 +18,7 @@ namespace api.Infrastructure
 
             modelBuilder.Entity<AttendeeEntity>().UseTphMappingStrategy().HasDiscriminator<string>("AttendeeType")
                 .HasValue<NaturalPersonAttendeeEntity>("NaturalPerson")
-                .HasValue<LegalEntityAttendeeEntity>("LegalEntity");
+                .HasValue<LegalAttendeeEntity>("LegalEntity");
 
             modelBuilder.Entity<AttendeeEntity>()
                 .HasOne(a => a.Event)
@@ -38,7 +38,7 @@ namespace api.Infrastructure
                 .Property(np => np.PersonalIdCode)
                 .IsRequired();
 
-            modelBuilder.Entity<LegalEntityAttendeeEntity>()
+            modelBuilder.Entity<LegalAttendeeEntity>()
                 .Property(le => le.LegalName)
                 .IsRequired();
 

@@ -15,9 +15,7 @@ function App() {
                     <AppRouter />
                 </main>
 
-                <footer>
                     <Footer />
-                </footer>
             </div>
         </BrowserRouter>
     );

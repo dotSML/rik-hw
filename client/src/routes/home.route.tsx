@@ -15,7 +15,6 @@ export function HomeRoute() {
                 const pastEvents = await getPastEvents();
                 setPastEvents(pastEvents);
             } catch (error) {
-                // Handle error (e.g., set error state)
                 console.error(error);
             }
         };
@@ -26,7 +25,7 @@ export function HomeRoute() {
     return (
         <div>
             <HomeSection />
-            <EventOverviewSection upcomingEvents={upcomingEvents} pastEvents={pastEvents} />
+            <EventOverviewSection setUpcomingEvents={setUpcomingEvents} setPastEvents={setPastEvents} upcomingEvents={upcomingEvents} pastEvents={pastEvents} />
         </div>
     );
 }

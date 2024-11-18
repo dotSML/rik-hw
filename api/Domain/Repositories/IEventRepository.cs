@@ -11,6 +11,6 @@ namespace api.Domain.Repositories
         Task<IEnumerable<Event>> GetPastEventsAsync();
         Task AddAsync(Event eventEntity);
         Task UpdateAsync(Event eventEntity);
-        Task DeleteAsync(Guid eventId);
+        Task<Boolean> DeleteByIdAsync(Guid eventId);
     }
 }

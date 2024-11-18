@@ -35,10 +35,15 @@ namespace api.Application.Services
             return events.Select(e => e.ToDto()).ToList();
         }
 
-        public async Task<bool> EventExistsAsync(Guid eventId)
+        public async Task<Boolean> EventExistsAsync(Guid eventId)
         {
             var eventEntity = await _eventRepository.GetByIdAsync(eventId);
             return eventEntity != null;
+        }
+
+        public Task<Boolean> DeleteEventByIdAsync(Guid eventId)
+        {
+            return _eventRepository.DeleteByIdAsync(eventId);
         }
     }
 

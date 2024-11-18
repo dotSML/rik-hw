@@ -23,7 +23,7 @@ export function Footer() {
         },
         {
             heading: "Kontakt", containerClass: "ml-20 col-span-2", renderContent: () => <div className="flex gap-4">
-                <div className="flex flex-col"><div className="flex"><p className="font-bold">Peakontor:{" "}</p><p className="font-bold">Tallinnas</p></div>
+                <div className="flex flex-col"><div className="flex"><p className="font-bold">Peakontor:&nbsp;</p><p className="font-bold">Tallinnas</p></div>
                 <p>
                 Väike-Ameerika 11415 Tallinn
                 </p>
@@ -33,13 +33,13 @@ export function Footer() {
                     </div>
                 </div>
                 <div className="flex flex-col">
-                    <div className="flex"><p className="font-bold">Harukontor:{" "}</p><p className="font-bold">Võrus</p></div>
+                    <div className="flex"><p className="font-bold">Harukontor:&nbsp;</p><p className="font-bold">Võrus</p></div>
                     <p>
-                        Väike-Ameerika 11415 Tallinn
+                        Oja tn 7 (külastusaadress)
                     </p>
                     <div className="flex"><p>Telefon:</p><p>605 4450</p></div>
                     <div className="flex">
-                        <p>Faks:</p><p>605 3186</p>
+                        <p>Faks:</p><p>605 3155</p>
                     </div>
                 </div>
 

@@ -40,3 +40,13 @@ export const patchAttendee = async (id: string, data: Partial<AttendeeModel>) =>
         throw e;
     }
 }
+
+export const deleteAttendee = async (id: string) => {
+    try {
+        const response = await axios.delete(`http://localhost:5220/api/attendees/${id}`);
+        return response.data;
+    } catch (e) {
+        console.error(e);
+        throw e;
+    }
+}

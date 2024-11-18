@@ -74,15 +74,17 @@ namespace api.Infrastructure.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Guid eventEntityId)
+        public async Task<Boolean> DeleteByIdAsync(Guid eventEntityId)
         {
-            var eventModel = await GetByIdAsync(eventEntityId);
-            if (eventModel != null)
+            var entity = await _context.Events.FindAsync(eventEntityId);
+            if (entity != null)
             {
-                var entity = MapToEntity(eventModel);
                 _context.Events.Remove(entity);
                 await _context.SaveChangesAsync();
+                return true;
             }
+
+            return false;
         }
 
         public static EventEntity MapToEntity(Event eventDomainModel)

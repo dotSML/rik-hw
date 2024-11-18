@@ -7,4 +7,6 @@ public interface IAttendeeService
     Task<IEnumerable<AttendeeDto>> GetAttendeesForEventAsync(Guid eventId);
     Task<AttendeeDto> GetByIdAsync(Guid attendeeId);
     Task<AttendeeDto> UpdateByIdAsync(Guid attendeeId, UpdateAttendeeDto updateAttendeeDto);
+
+    Task<Boolean> DeleteByIdAsync(Guid attendeeId);
 }

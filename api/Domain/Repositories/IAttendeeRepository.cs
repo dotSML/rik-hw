@@ -7,5 +7,5 @@ public interface IAttendeeRepository
     Task<IEnumerable<Attendee>> GetByEventIdAsync(Guid eventId);
     Task<Attendee> UpdateAsync(Attendee attendee);
     Task<Attendee> AddAsync(Attendee attendeeEntity);
-    Task DeleteAsync(Guid attendeeId);
+    Task<Boolean> DeleteAsync(Guid attendeeId);
 }

@@ -8,5 +8,7 @@ namespace api.Domain.Services
         Task<IEnumerable<EventDto>> GetAllEventsAsync(string? status);
         Task<EventDto?> GetEventByIdAsync(Guid eventId);
         Task<bool> EventExistsAsync(Guid eventId);
+
+        Task<Boolean> DeleteEventByIdAsync(Guid eventId);
     }
 }

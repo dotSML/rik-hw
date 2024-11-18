@@ -33,3 +33,13 @@ export const postEvent = async (data: any) => {
     }
 }
 
+export const deleteEvent = async (id: string) => {
+    try {
+        const response = await axios.delete(`http://localhost:5220/api/events/${id}`);
+        return response.data;
+    } catch (e) {
+        console.error(e);
+        throw new Error('Error deleting event');
+    }
+}
+

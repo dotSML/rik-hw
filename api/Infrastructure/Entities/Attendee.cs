@@ -43,16 +43,16 @@ namespace api.Infrastructure.Entities
         }
     }
 
-    public class LegalEntityAttendeeEntity : AttendeeEntity
+    public class LegalAttendeeEntity : AttendeeEntity
     {
-        public LegalEntityAttendeeEntity() { }
+        public LegalAttendeeEntity() { }
         public string LegalName { get; set; }
         public string CompanyRegistrationCode { get; set; }
         public int AttendeeCount { get; set; }
         public string ParticipantRequests { get; set; } = string.Empty;
 
 
-        public LegalEntityAttendeeEntity(Guid eventId, string legalName, string registrationCode, int attendeeCount,
+        public LegalAttendeeEntity(Guid eventId, string legalName, string registrationCode, int attendeeCount,
                                    Guid paymentMethodId, string additionalInfo, string participantRequests, Guid? id, EventEntity eventEntity, PaymentMethodEntity paymentMethodEntity)
             : base(id, eventId, paymentMethodId,
                    additionalInfo?.Length <= 5000 ? additionalInfo : throw new ArgumentException("Additional info exceeds 5000 characters for a legal entity"), eventEntity, paymentMethodEntity)

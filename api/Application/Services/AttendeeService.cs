@@ -3,6 +3,7 @@ using api.Application.Helpers;
 using api.Application.Interfaces;
 using api.Domain.Models;
 using api.Domain.Services;
+using Xunit.Sdk;
 
 public class AttendeeService : IAttendeeService
 {
@@ -69,6 +70,12 @@ public class AttendeeService : IAttendeeService
         await _attendeeRepository.UpdateAsync(dto.MergeUpdateDtoIntoEntity(attendee));
 
         return attendee.ToDto();
+    }
+
+
+    public async Task<Boolean> DeleteByIdAsync(Guid id)
+    {
+        return await _attendeeRepository.DeleteAsync(id);
     }
 
 

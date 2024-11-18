@@ -111,7 +111,7 @@ export function AttendeesRoute() {
             <div className="max-w-[50%]">
             <h3 className="text-primaryBlue text-2xl mb-8">Osavõtjad</h3>
             {eventDetails?.name ?
-                    <EventDetails eventData={eventDetails} attendees={attendees} /> : ""}
+                    <EventDetails eventData={eventDetails} attendees={attendees} handleSetAttendees={setAttendees} /> : ""}
             </div>
             <div className="w-[50%]">
                 <h3 className="text-primaryBlue text-2xl mb-8">Osavõtjate lisamine</h3>
