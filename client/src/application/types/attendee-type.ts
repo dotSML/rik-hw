@@ -1,4 +1,4 @@
 export enum AttendeeType {
-    NaturalPerson = "NaturalPerson",
-    LegalEntity = "LegalEntity"
+  NaturalPerson = 'NaturalPerson',
+  LegalEntity = 'LegalEntity',
 }

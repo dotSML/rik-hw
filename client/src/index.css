@@ -2,11 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
 #root {
-    max-width:100vw;
-    min-height: 100vh;
-    background-color: theme('colors.primaryGrey');
-    overflow: hidden;
+  max-width: 100vw;
+  min-height: 100vh;
+  background-color: theme('colors.primaryGrey');
+  overflow: hidden;
 }
-

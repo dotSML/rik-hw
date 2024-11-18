@@ -1,4 +1,4 @@
-﻿using api.Application.Interfaces;
+using api.Application.Interfaces;
 using api.Domain.Repositories;
 using api.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;

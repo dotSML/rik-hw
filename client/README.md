@@ -35,36 +35,47 @@ Follow these steps to set up the client application on your local machine:
    ```bash
    git clone https://github.com/dotsml/rik-hw.git
 
+   ```
+
 2. **Navigate to the Client Directory**
-    ```bash
-    cd rik-hw/client
+
+   ```bash
+   cd rik-hw/client
+
+   ```
 
 3. **Install dependencies**
-    ```bash
-    npm install
+
+   ```bash
+   npm install
+
+   ```
 
 4. **Start the development server**
-    ```bash
-    npm run dev
-Application should now be running at <a>http://localhost:5173</a>
+   ```bash
+   npm run dev
+   Application should now be running at <a>http://localhost:5173</a>
 
 ## Project structure
+
 client/
 ├── src/
-│   ├── application/      # Application services
-│   ├── domain/           # Domain models and logic
-│   ├── infrastructure/   # API services and repositories
-│   ├── presentation/     # UI components and views
-│   ├── App.js
-│   └── index.js
+│ ├── application/ # Application services
+│ ├── domain/ # Domain models and logic
+│ ├── infrastructure/ # API services and repositories
+│ ├── presentation/ # UI components and views
+│ ├── App.js
+│ └── index.js
 ├── public/
-│   └── index.html
+│ └── index.html
 ├── package.json
 └── README.md
+
 - application/: Contains the services that coordinate domain operations.
 - domain/: Holds the core business logic and domain models.
 - infrastructure/: Manages communication with external services (e.g., API calls).
 - presentation/: Includes React components and UI elements.
 
 ## License
+
 This project is licensed under the MIT License.

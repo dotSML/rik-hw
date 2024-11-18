@@ -32,7 +32,7 @@ namespace api.Infrastructure.Repositories
 
             if (status == "upcoming")
             {
-                query = query.Where(e => e.Date >= DateTime.Today); 
+                query = query.Where(e => e.Date >= DateTime.Today);
             }
             else if (status == "past")
             {

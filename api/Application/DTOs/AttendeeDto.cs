@@ -22,6 +22,6 @@ namespace api.Application.DTOs
         public virtual PaymentMethodDto? PaymentMethod { get; set; }
         public virtual EventDto? Event { get; set; }
         public Guid EventId { get; set; }
-        }
-    
+    }
+
 }

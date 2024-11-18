@@ -90,7 +90,7 @@ namespace api.Infrastructure.Repositories
         {
             return attendee switch
             {
-                NaturalPersonAttendee naturalPerson => new NaturalPersonAttendeeEntity(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.AttendeeId, naturalPerson.Event != null ? EventRepository.MapToEntity(naturalPerson.Event) : null,naturalPerson.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(naturalPerson.PaymentMethod) : null),
+                NaturalPersonAttendee naturalPerson => new NaturalPersonAttendeeEntity(naturalPerson.EventId, naturalPerson.FirstName, naturalPerson.LastName, naturalPerson.PersonalIdCode, naturalPerson.PaymentMethodId, naturalPerson.AdditionalInfo, naturalPerson.AttendeeId, naturalPerson.Event != null ? EventRepository.MapToEntity(naturalPerson.Event) : null, naturalPerson.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(naturalPerson.PaymentMethod) : null),
                 LegalEntityAttendee legalEntity => new LegalAttendeeEntity(legalEntity.EventId, legalEntity.LegalName, legalEntity.CompanyRegistrationCode, legalEntity.AttendeeCount, legalEntity.PaymentMethodId, legalEntity.AdditionalInfo, legalEntity.ParticipantRequests, legalEntity.AttendeeId, legalEntity.Event != null ? EventRepository.MapToEntity(legalEntity.Event) : null, legalEntity.PaymentMethod != null ? PaymentMethodRepository.MapToEntity(legalEntity.PaymentMethod) : null),
                 _ => throw new ArgumentException("Unknown attendee type")
             };

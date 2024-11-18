@@ -1,4 +1,4 @@
-﻿namespace api.Domain.Models
+namespace api.Domain.Models
 {
     public class PaymentMethod
     {

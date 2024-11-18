@@ -1,19 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 const useForm = (
   initialValues: Record<string, string>,
-  initialValidators: { [key: string]: (value: string) => string | undefined } = {}
+  initialValidators: {
+    [key: string]: (value: string) => string | undefined;
+  } = {}
 ) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isTouched, setIsTouched] = useState(false);
   const [isValid, setIsValid] = useState(false);
-  const [validators, setValidators] = useState<Record<string, (value: string) => void>>(initialValidators);
+  const [validators, setValidators] =
+    useState<Record<string, (value: string) => void>>(initialValidators);
 
   useEffect(() => {
     if (isTouched) {
       const allValid = Object.keys(validators).every(
-        (field) => !validators[field](values[field] || "")
+        (field) => !validators[field](values[field] || '')
       );
       setIsValid(allValid);
     }
@@ -23,10 +26,12 @@ const useForm = (
     if (validators[name]) {
       return validators[name](value);
     }
-    return ""; 
+    return '';
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     if (!isTouched) {
@@ -39,7 +44,9 @@ const useForm = (
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
 
     if (!isTouched) {
@@ -51,19 +58,22 @@ const useForm = (
   };
 
   const handleSubmit =
-    <T>(submitCallback: (data: T) => void | Promise<void>, resetValues = true) =>
+    <T>(
+      submitCallback: (data: T) => void | Promise<void>,
+      resetValues = true
+    ) =>
     () => {
       const newErrors: Record<string, string> = {};
 
       Object.keys(validators).forEach((field) => {
-        const error = validateField(field, values[field] || "");
+        const error = validateField(field, values[field] || '');
         newErrors[field] = error;
       });
 
       setErrors(newErrors);
 
       const allValid = Object.keys(validators).every(
-        (field) => !validators[field](values[field] || "")
+        (field) => !validators[field](values[field] || '')
       );
 
       if (allValid) {
@@ -79,7 +89,16 @@ const useForm = (
     setValues((prevValues) => ({ ...prevValues, ...data }));
   };
 
-  return { isValid, values, errors, handleChange, handleBlur, handleSubmit, handleSetValues, setValidators };
+  return {
+    isValid,
+    values,
+    errors,
+    handleChange,
+    handleBlur,
+    handleSubmit,
+    handleSetValues,
+    setValidators,
+  };
 };
 
 export default useForm;

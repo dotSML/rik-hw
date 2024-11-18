@@ -1,4 +1,4 @@
-﻿using api.Domain.Repositories;
+using api.Domain.Repositories;
 
 namespace api.Application.Interfaces
 {

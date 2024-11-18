@@ -41,7 +41,7 @@ namespace api.Application.DTOs
     {
         protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)
         {
-           
+
             if (value == null || value == "")
             {
                 return ValidationResult.Success;

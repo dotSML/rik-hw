@@ -4,7 +4,7 @@ namespace api.Infrastructure.Entities
     public class AttendeeEntity
     {
         public Guid? Id { get; protected set; }
-        
+
         public Guid EventId { get; protected set; }
         public EventEntity Event { get; protected set; }
         public string? AdditionalInfo { get; protected set; } = string.Empty;
@@ -14,7 +14,7 @@ namespace api.Infrastructure.Entities
 
         public AttendeeEntity() { }
 
-         public AttendeeEntity(Guid? id, Guid eventId, Guid paymentMethodId, string additionalInfo, EventEntity eventEntity, PaymentMethodEntity paymentMethodEntity)
+        public AttendeeEntity(Guid? id, Guid eventId, Guid paymentMethodId, string additionalInfo, EventEntity eventEntity, PaymentMethodEntity paymentMethodEntity)
         {
             Event = eventEntity;
             PaymentMethod = paymentMethodEntity;
@@ -29,7 +29,7 @@ namespace api.Infrastructure.Entities
     {
         public NaturalPersonAttendeeEntity() { }
 
-        public string FirstName { get;  set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public string PersonalIdCode { get; set; }
 

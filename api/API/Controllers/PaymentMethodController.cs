@@ -5,7 +5,7 @@ namespace api.API.Controllers
 {
     [ApiController]
     [Route("api/payment-methods")]
-    public class PaymentMethodController: ControllerBase
+    public class PaymentMethodController : ControllerBase
     {
         private readonly IPaymentMethodService _paymentMethodService;
         public PaymentMethodController(IPaymentMethodService paymentMethodService)
@@ -22,6 +22,6 @@ namespace api.API.Controllers
             return paymentMethods != null ? Ok(paymentMethods) : NotFound();
         }
 
-        
+
     }
 }

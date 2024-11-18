@@ -17,7 +17,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowReactClient",
         corsBuilder =>
         {
-            corsBuilder.WithOrigins(builder.Configuration["Application:ClientUrl"]) 
+            corsBuilder.WithOrigins(builder.Configuration["Application:ClientUrl"])
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
@@ -32,7 +32,7 @@ app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate(); 
+    dbContext.Database.Migrate();
 }
 
 
@@ -48,4 +48,3 @@ app.UseHttpsRedirection();
 
 
 app.Run();
-

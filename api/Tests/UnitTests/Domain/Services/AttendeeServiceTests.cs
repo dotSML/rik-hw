@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using api.Application.DTOs;
 using api.Application.Mappers;
 using api.Application.Services;
@@ -10,6 +6,10 @@ using api.Domain.Models;
 using api.Domain.Repositories;
 using api.Domain.Services;
 using Moq;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Tests.UnitTests.Domain.Services

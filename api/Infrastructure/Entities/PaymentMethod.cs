@@ -1,4 +1,4 @@
-﻿namespace api.Infrastructure.Entities
+namespace api.Infrastructure.Entities
 {
     public class PaymentMethodEntity
     {

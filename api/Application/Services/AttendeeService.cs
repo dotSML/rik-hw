@@ -17,7 +17,7 @@ public class AttendeeService : IAttendeeService
     }
 
     public async Task<Guid> CreateAttendeeAsync(CreateAttendeeDto dto)
-    { 
+    {
         var newAttendee = dto.ToModelFromDto();
 
         var createdAttendee = await _attendeeRepository.AddAsync(newAttendee);

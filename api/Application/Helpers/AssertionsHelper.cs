@@ -1,4 +1,4 @@
-﻿namespace api.Application.Helpers
+namespace api.Application.Helpers
 {
     public static class AssertionHelper
     {

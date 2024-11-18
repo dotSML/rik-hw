@@ -9,17 +9,17 @@ public static class AttendeeMapper
     {
         return dto.Type switch
         {
-           AttendeeType.NaturalPerson => new NaturalPersonAttendee(
-                dto.EventId,
-                dto.FirstName,
-                dto.LastName,
-                dto.PersonalIdCode,
-                dto.PaymentMethodId,
-                dto.AdditionalInfo,
-                null,
-                null,
-                null
-            ),
+            AttendeeType.NaturalPerson => new NaturalPersonAttendee(
+                 dto.EventId,
+                 dto.FirstName,
+                 dto.LastName,
+                 dto.PersonalIdCode,
+                 dto.PaymentMethodId,
+                 dto.AdditionalInfo,
+                 null,
+                 null,
+                 null
+             ),
             AttendeeType.LegalEntity => new LegalEntityAttendee(
                 dto.EventId,
                 dto.LegalName,
@@ -37,7 +37,7 @@ public static class AttendeeMapper
         };
     }
 
-    public static Attendee MergeUpdateDtoIntoEntity(this UpdateAttendeeDto dto, Attendee entity)   
+    public static Attendee MergeUpdateDtoIntoEntity(this UpdateAttendeeDto dto, Attendee entity)
     {
         if (!string.IsNullOrEmpty(dto.FirstName) && entity is NaturalPersonAttendee naturalAttendee)
             naturalAttendee.UpdateFirstName(dto.FirstName);
