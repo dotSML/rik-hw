@@ -14,9 +14,6 @@ namespace api.Domain.Models
         public Event() { }
         public Event(string name, DateTime date, string location, string additionalInfo, Guid? id)
         {
-            if (date <= DateTime.UtcNow)
-                throw new ArgumentException("The event date must be in the future.");
-
             EventId = id ?? Guid.NewGuid();
             Name = name;
             Date = date;

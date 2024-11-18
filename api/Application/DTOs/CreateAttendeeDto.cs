@@ -12,6 +12,7 @@ namespace api.Application.DTOs
         public override string? LastName { get; set; } = string.Empty;
 
         [RequiredIfType(AttendeeType.NaturalPerson)]
+        [EstonianIdCode]
         public override string? PersonalIdCode { get; set; } = string.Empty;
 
         [RequiredIfType(AttendeeType.LegalEntity)]
@@ -23,7 +24,6 @@ namespace api.Application.DTOs
         [RequiredIfType(AttendeeType.LegalEntity)]
         public override int? AttendeeCount { get; set; } = null;
 
-        [RequiredIfType(AttendeeType.LegalEntity)]
         public override string? ParticipantRequests { get; set; } = string.Empty;
 
         [JsonConverter(typeof(JsonStringEnumConverter))]

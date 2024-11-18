@@ -13,7 +13,7 @@ import { createAttendee } from "../application/use-cases/create-attendee.use-cas
 import { PaymentMethodModel } from "../domain/models/payment-method.model";
 import { getPaymentMethods } from "../application/use-cases/fetch-payment-methods.use-case";
 import { AttendeeType } from "../application/types/attendee-type";
-import { required } from "../application/hooks/validators";
+import { isNumber, required, validateEstonianIdCode } from "../application/hooks/validators";
 
 export function AttendeesRoute() {
     const { eventId } = useParams();
@@ -33,10 +33,18 @@ export function AttendeesRoute() {
         eventId
     }
 
-    const validators = {
-        firstName: required
+    const naturalPersonValidators = {
+        firstName: required,
+        lastName: required,
+        personalIdCode: (value: string) => {return required(value) || validateEstonianIdCode(value)},
     };
-    const form = useForm(initialValues, validators)
+    const legalEntityValidators = {
+        legalName: required,
+        companyRegistrationCode: required,
+        attendeeCount: (val: string) => {return required(val) || isNumber(val)},
+      }
+    const form = useForm(initialValues, initialValues.type === AttendeeType.NaturalPerson ? naturalPersonValidators : legalEntityValidators);
+
 
     const [eventDetails, setEventDetails] = useState<EventModel>();
     const [attendees, setAttendees] = useState<AttendeeModel[]>([]);
@@ -74,22 +82,10 @@ export function AttendeesRoute() {
         const type = form.values.type;
         const newValidators =
           type === AttendeeType.NaturalPerson
-            ? {
-                firstName: required,
-                lastName: required,
-              }
-            : {
-                legalName: required,
-                companyRegistrationCode: required,
-              };
-              console.log("Type", type);
+            ? naturalPersonValidators
+            : legalEntityValidators
         form.setValidators(newValidators);
       }, [form.values.type]);
-
-      useEffect(() => {
-        console.log("Form values", form.values);
-      }, [form.values])
-
 
 
     const postSubmit = async (data: AttendeeModel) => {

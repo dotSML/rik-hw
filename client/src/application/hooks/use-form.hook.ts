@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 
 const useForm = (
   initialValues: Record<string, string>,
-  initialValidators: { [key: string]: (value: string) => string } = {}
+  initialValidators: { [key: string]: (value: string) => string | undefined } = {}
 ) => {
   const [values, setValues] = useState(initialValues);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isTouched, setIsTouched] = useState(false);
   const [isValid, setIsValid] = useState(false);
-  const [validators, setValidators] = useState(initialValidators);
+  const [validators, setValidators] = useState<Record<string, (value: string) => void>>(initialValidators);
 
   useEffect(() => {
     if (isTouched) {
@@ -26,7 +26,7 @@ const useForm = (
     return ""; 
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
     if (!isTouched) {
@@ -39,7 +39,7 @@ const useForm = (
     setErrors((prevErrors) => ({ ...prevErrors, [name]: error }));
   };
 
-  const handleBlur = (e: React.FocusEvent<HTMLInputElement>) => {
+  const handleBlur = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
 
     if (!isTouched) {

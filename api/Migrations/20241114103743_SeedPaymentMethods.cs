@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
@@ -18,8 +18,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "Method" },
                 values: new object[,]
                 {
-                    { new Guid("24bd9390-51bd-4433-937e-c1307f998ae1"), "Cash" },
-                    { new Guid("77b4e02e-c122-4630-92c5-1a00e11b02b9"), "Bank transfer" }
+                    { new Guid("24bd9390-51bd-4433-937e-c1307f998ae1"), "CASH" },
+                    { new Guid("77b4e02e-c122-4630-92c5-1a00e11b02b9"), "BANK_TRANSFER" }
                 });
         }
 

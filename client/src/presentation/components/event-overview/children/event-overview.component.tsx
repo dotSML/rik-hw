@@ -3,7 +3,7 @@ import { EventModel } from "../../../../domain/models/event.model"
 import { EventListItem } from "./event-list-item.component"
 import { removeEvent } from "../../../../application/use-cases/delete-event.use-case"
 
-export function EventOverview({ heading, className, data, actions, handleSetData }: { handleSetData: (data: any[]) => void, heading: string, className?: string, data: EventModel[], actions?: ReactNode }) {
+export function EventOverview({ heading, className, data, actions, handleSetData }: { handleSetData: (data: EventModel[]) => void, heading: string, className?: string, data: EventModel[], actions?: ReactNode }) {
     const handleRemove = async (id: string) => {
         await removeEvent(id);
         handleSetData([...data.filter((item) => item.eventId !== id)]);
@@ -14,10 +14,10 @@ export function EventOverview({ heading, className, data, actions, handleSetData
         </div>
         <div className="flex flex-col p-4 h-full w-full">
         <div className="flex flex-col w-full h-full">
-        {data?.map((item, idx) => {
+        {data?.length ? data?.map((item, idx) => {
             return (<EventListItem key={`heading-${idx}`} index={idx} handleRemove={(eventId: string) => handleRemove(eventId) } data={item} />)
             
-        })}
+        }) : "Üritused puuduvad"}
         </div>
         <div className="flex self-start">
             {actions}

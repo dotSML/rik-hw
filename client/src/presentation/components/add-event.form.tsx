@@ -4,7 +4,7 @@ export function AddEventForm({ values, errors, handleChange, handleBlur }: { val
 
     return <form>
         <FormField name="name" label="Ürituse nimi" value={values.name} onChange={handleChange} onBlur={handleBlur} error={errors.name } />
-        <FormField type="date" name="date" label="Toimumise aeg" value={values.date} onChange={handleChange} onBlur={handleBlur} error={errors.date} />
+        <FormField type="date" name="date" label="Toimumise aeg" value={values.date} onChange={handleChange} onBlur={handleBlur} error={errors.date} min={new Date().toISOString()} />
         <FormField name="location" label="Koht" value={values.location} onChange={handleChange} onBlur={handleBlur} error={errors.location} />
         <FormField type="textarea" name="additionalInfo" label="Lisainfo: " value={values.additionalInfo} onChange={handleChange} onBlur={handleBlur} error={errors.additionalInfo} />
     </form>

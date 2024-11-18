@@ -1,8 +1,10 @@
 import axios from 'axios';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 export const fetchEvents = async (params: URLSearchParams) => {
     try {
-        const response = await axios.get('http://localhost:5220/api/events', {
+        const response = await axios.get(`${apiUrl}/events`, {
             params: Object.fromEntries(params),
         });
         return response.data;
@@ -15,7 +17,7 @@ export const fetchEvents = async (params: URLSearchParams) => {
 
 export const fetchEvent = async (eventId: string) => {
     try {
-        const response = await axios.get(`http://localhost:5220/api/events/${eventId}`);
+        const response = await axios.get(`${apiUrl}/events/${eventId}`);
         return response.data;
     } catch (error) {
         console.error(error)
@@ -25,7 +27,7 @@ export const fetchEvent = async (eventId: string) => {
 
 export const postEvent = async (data: any) => {
     try {
-        const response = await axios.post(`http://localhost:5220/api/events`, data);
+        const response = await axios.post(`${apiUrl}/events`, data);
         return response.data;
     } catch (e) {
         console.error(e);
@@ -35,7 +37,7 @@ export const postEvent = async (data: any) => {
 
 export const deleteEvent = async (id: string) => {
     try {
-        const response = await axios.delete(`http://localhost:5220/api/events/${id}`);
+        const response = await axios.delete(`h${apiUrl}/events/${id}`);
         return response.data;
     } catch (e) {
         console.error(e);

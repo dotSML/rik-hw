@@ -2,7 +2,7 @@ import { AddEventForm } from "../presentation/components/add-event.form";
 import { PageWrapper } from "../presentation/components/page-wrapper.component";
 import { createEvent } from "../application/use-cases/create-event.use-case";
 import useForm from "../application/hooks/use-form.hook";
-import { required } from "../application/hooks/validators";
+import { dateInFuture, required } from "../application/hooks/validators";
 import { ActionGroup } from "../presentation/components/action-group.component";
 import { useNavigate } from "react-router-dom";
 
@@ -19,7 +19,10 @@ export function AddEventRoute()
 
     const validators = {
         name: required,
-        date: required,
+        date: (value: string) => {
+            return required(value) ||
+            dateInFuture(value)
+        },
         location: required,
     };
 

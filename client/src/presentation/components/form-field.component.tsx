@@ -1,4 +1,4 @@
-export function FormField({ label, name, value, onChange, onBlur, error, type = "text", options = [] }) {
+export function FormField({ label, name, value, onChange, onBlur, error, type = "text", options = [], min }: {min?: string, label: string, name: string, value: string, onChange: (e: any) => void, onBlur: (e: any) => void, error: string, type?: string, options?: { label: string, value: string }[] }) {
     return (
         <div className="grid grid-cols-3 gap-4 mb-4">
             <label htmlFor={name} className="text-left pr-2 pt-1">
@@ -20,6 +20,9 @@ export function FormField({ label, name, value, onChange, onBlur, error, type = 
                     onChange={onChange}
                     onBlur={onBlur}
                 >
+                    <option value="" disabled>
+                        Vali...
+                    </option>
                     {options.map((option) => (
                         <option key={option.value} value={option.value}>
                             {option.label}
@@ -34,6 +37,7 @@ export function FormField({ label, name, value, onChange, onBlur, error, type = 
                     value={value}
                     onChange={onChange}
                     onBlur={onBlur}
+                    min={min}
                 />
             )}
             {error && <p className="text-red-400 mt-2 text-sm col-span-3">{error}</p>}

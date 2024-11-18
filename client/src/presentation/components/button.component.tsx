@@ -4,10 +4,12 @@ type ButtonProps = {
     type?: 'button' | 'submit' | 'reset';
     onClick?: () => void;
     disabled?: boolean;
+    size?: 'xs' | 'sm' | 'md' | 'lg';
+    className?: string;
 };
 
-export function Button({ title, variant = 'primary', type = 'button', onClick, disabled = false }: ButtonProps) {
-    const baseClasses = "px-4 py-2 font-semibold rounded focus:outline-none";
+export function Button({ title, variant = 'primary', type = 'button', onClick, disabled = false, size = 'md', className }: ButtonProps) {
+    const baseClasses = `px-4 py-2 font-semibold rounded focus:outline-none text-${size}`;
     let variantClasses = "";
 
     if (!disabled) {
@@ -36,7 +38,7 @@ export function Button({ title, variant = 'primary', type = 'button', onClick, d
         <button
             type={type}
             onClick={onClick}
-            className={`${baseClasses} ${variantClasses}`}
+            className={`${baseClasses} ${variantClasses} ${className}`}
             disabled={disabled}
         >
             {title}

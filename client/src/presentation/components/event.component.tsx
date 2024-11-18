@@ -14,7 +14,7 @@ function EventAttribute({ label, value, customValue }: { label: string, value?: 
 function AttendeeItem({ data, index, handleRemoveAttendee }: { handleRemoveAttendee: any, data: AttendeeModel, index: number}) {
     const navigate = useNavigate();
 
-    return <div className="grid grid-cols-4 whitespace-nowrap gap-4">
+    return <div className="flex flex-1 justify-between items-center whitespace-nowrap gap-4">
 
         <p>{index}.{data.type === AttendeeType.NaturalPerson ? `${data.firstName} ${data.lastName}` : data.legalName}</p>
         <p>{data.type === AttendeeType.NaturalPerson ? data.personalIdCode : data.companyRegistrationCode}</p>
@@ -46,7 +46,7 @@ export function EventDetails({ eventData, attendees, handleSetAttendees }: { eve
             <div className="ml-8 mt-6">
                 {attendees.length
                     ? attendees.map((a, idx) => (
-                        <AttendeeItem handleRemoveAttendee={handleRemoveAttendee} index={idx + 1} key={a.personalIdCode + idx} data={a} />
+                        <AttendeeItem handleRemoveAttendee={handleRemoveAttendee} index={idx + 1} key={a?.personalIdCode + idx} data={a} />
                     ))
                     : <p>Osavõtjad puuduvad</p>}              </div>
         </div>

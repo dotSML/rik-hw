@@ -77,8 +77,4 @@ public class AttendeeService : IAttendeeService
     {
         return await _attendeeRepository.DeleteAsync(id);
     }
-
-
-
-
 }

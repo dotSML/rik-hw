@@ -1,11 +1,13 @@
 using api.Application;
 using api.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Configuration.AddEnvironmentVariables();
 builder.Services.AddControllers();
 builder.Services.AddApplicationServices();
-builder.Services.AddInfrastructureServices("Data Source=eventmanagement.db");
+builder.Services.AddInfrastructureServices(builder.Configuration.GetConnectionString("DefaultConnection"));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -13,9 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReactClient",
-        builder =>
+        corsBuilder =>
         {
-            builder.WithOrigins("http://localhost:5173") 
+            corsBuilder.WithOrigins(builder.Configuration["Application:ClientUrl"]) 
                    .AllowAnyMethod()
                    .AllowAnyHeader();
         });
@@ -27,10 +29,13 @@ app.UseCors("AllowReactClient");
 
 app.MapControllers();
 
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    dbContext.Database.Migrate(); 
+}
 
 
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

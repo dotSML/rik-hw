@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { getPastEvents, getUpcomingEvents } from "../application/use-cases/fetch-events.use-case";
 import { EventOverviewSection } from "../presentation/components/event-overview/event-overview-section.component";
 import { HomeSection } from "../presentation/components/home-section.component";
+import { EventModel } from "../domain/models/event.model";
 
 export function HomeRoute() {
-    const [upcomingEvents, setUpcomingEvents] = useState([]);
-    const [pastEvents, setPastEvents] = useState([]);
+    const [upcomingEvents, setUpcomingEvents] = useState<EventModel[]>([]);
+    const [pastEvents, setPastEvents] = useState<EventModel[]>([]);
 
     useEffect(() => {
         const loadEvents = async () => {

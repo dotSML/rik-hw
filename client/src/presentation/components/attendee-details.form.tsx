@@ -1,6 +1,7 @@
 import { AttendeeType } from "../../application/types/attendee-type";
 import { AttendeeModel } from "../../domain/models/attendee.model";
 import { PaymentMethodModel } from "../../domain/models/payment-method.model";
+import { mapPaymentMethodOptions } from "../helpers/map-payment-methods.helper";
 import { FormField } from "./form-field.component";
 
 export function AttendeeDetailsForm({
@@ -19,7 +20,7 @@ export function AttendeeDetailsForm({
     const naturalPersonFields = [{
         name: 'firstName', label: "Eesnimi"
     }, { name: 'lastName', label: "Perekonnanimi" }, { name: 'personalIdCode', label: "Isikukood" }, {
-        name: "paymentMethodId", label: "Maksemeetod", type: "select", options: [{label: "", value: ""}, ...paymentMethods.map((pm) => ({ label: pm.method, value: pm.id }))]
+        name: "paymentMethodId", label: "Maksemeetod", type: "select", options: mapPaymentMethodOptions(paymentMethods)
 
     }, {
         name: "additionalInfo", label: "Lisainfo", type:
@@ -31,7 +32,7 @@ export function AttendeeDetailsForm({
         name: "legalName", label: "Ettevõtte nimi",
 
     }, {
-        name: 'paymentMethodId', label: "Maksemeetod", type: "select", options: paymentMethods.map((pm) => ({label: pm.method, value: pm.id}))
+        name: 'paymentMethodId', label: "Maksemeetod", type: "select", options: mapPaymentMethodOptions(paymentMethods)
         }, {
             name: "companyRegistrationCode", label: "Registrikood"
         },
@@ -44,6 +45,8 @@ export function AttendeeDetailsForm({
         }
 
     ]
+
+    console.log(values.type)
 
     return (
         <form className="flex flex-col gap-4 w-full max-w-lg">

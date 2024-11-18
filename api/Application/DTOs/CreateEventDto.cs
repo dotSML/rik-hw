@@ -7,7 +7,7 @@ namespace api.Application.DTOs
         public string Name { get; set; }
 
         [Required]
-        [DataType(DataType.Date)]
+        [FutureDate(ErrorMessage = "Kuupäev peab olema tulevikus.")]
         public DateTime Date { get; set; }
 
         public string Location { get; set; }

@@ -9,24 +9,35 @@ import useForm from "../application/hooks/use-form.hook";
 import { ActionGroup } from "../presentation/components/action-group.component";
 import { getPaymentMethods } from "../application/use-cases/fetch-payment-methods.use-case";
 import { updateAttendee } from "../application/use-cases/update-attendee.use-case";
+import { required, validateEstonianIdCode } from "../application/hooks/validators";
 
 export function AttendeeDetailsRoute() {
     const navigate = useNavigate();
-    const [initialValues, setInitialValues] = useState({
-        firstName: "",
-       lastName: "",
-        personalIdCode: "",
-        paymentMethodId: "",
-        additionalInfo: "",
-        type: AttendeeType.NaturalPerson
-    });
-    const validators = {}
-    const form = useForm(initialValues, validators);
+    
+    const [initialValues, setInitialValues] = useState({});
+
+    const naturalPersonValidators = {
+        firstName: required,
+        lastName: required,
+        personalIdCode: (val: string) =>{ return required(val) || validateEstonianIdCode(val) },
+    }
+
+    const legalEntityValidators = {
+        legalName: required,
+        companyRegistrationCode: required,
+    }
+    const form = useForm(initialValues, {});
 
     const { attendeeId } = useParams<{ attendeeId: string }>();
     const [attendee, setAttendee] = useState<AttendeeModel | null>(null);
     const [paymentMethods, setPaymentMethods] = useState([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
+
+    useEffect(() => {
+        console.log(form.errors)
+        console.log(form.isValid)
+        console.log(isSubmitting)
+    }, [form]);
 
 
     useEffect(() => {
@@ -34,20 +45,35 @@ export function AttendeeDetailsRoute() {
             if (attendeeId) {
                 const fetchedAttendee = await getAttendeeById(attendeeId);
                 setAttendee(fetchedAttendee);
-                const mappedAttendee = {
-                    firstName: fetchedAttendee.firstName || "",
-                    lastName: fetchedAttendee.lastName || "",
-                    personalIdCode: fetchedAttendee.personalIdCode || "",
-                    paymentMethodId: fetchedAttendee.paymentMethodId || "",
-                    legalName: fetchedAttendee.legalName || "",
-                    companyRegistrationCode: fetchedAttendee.companyRegistrationCode || "",
-                    attendeeCount: fetchedAttendee.attendeeCount || null,
-                    additionalInfo:fetchedAttendee.additionalInfo || "",
-                    type: fetchedAttendee.type || AttendeeType.NaturalPerson, 
-    
-                };
-                setInitialValues(mappedAttendee);
+                console.log(fetchedAttendee)
+                if(fetchedAttendee?.type === AttendeeType.NaturalPerson) {
+                    const mappedAttendee = {
+                        firstName: fetchedAttendee.firstName || "",
+                        lastName: fetchedAttendee.lastName || "",
+                        personalIdCode: fetchedAttendee.personalIdCode || "",
+                        paymentMethodId: fetchedAttendee.paymentMethodId || "",
+                        additionalInfo: fetchedAttendee.additionalInfo || "",
+                        type: AttendeeType.NaturalPerson,
+                    }
+                    setInitialValues(mappedAttendee);
+                    form.setValidators(naturalPersonValidators);
+                    form.handleSetValues(mappedAttendee);
+                } else {
+                    const mappedAttendee = {
+                        legalName: fetchedAttendee.legalName || "",
+                        companyRegistrationCode: fetchedAttendee.companyRegistrationCode || "",
+                        paymentMethodId: fetchedAttendee.paymentMethodId || "",
+                        attendeeCount: fetchedAttendee.attendeeCount || null,
+                        additionalInfo: fetchedAttendee.additionalInfo || "",
+                        type: AttendeeType.LegalEntity,
+                    }
+                    form.setValidators(legalEntityValidators);
+                    setInitialValues(mappedAttendee);
                 form.handleSetValues(mappedAttendee);
+
+                }
+            
+                
             }
         };
         const fetchPaymentMethods = async () => {
@@ -68,7 +94,7 @@ export function AttendeeDetailsRoute() {
 
     return (
         <PageWrapper title="Osaleja">
-            {attendee ? (
+            {attendee && attendee?.type ? (
                 <div>
                 <AttendeeDetailsForm {...form} paymentMethods={paymentMethods} />
                 <ActionGroup actions={[{ title: "Tagasi", variant: 'secondary', onClick: () => navigate(-1) }

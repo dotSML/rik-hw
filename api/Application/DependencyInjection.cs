@@ -11,6 +11,7 @@ namespace api.Application
             services.AddScoped<IAttendeeService, AttendeeService>();
             services.AddScoped<IPaymentMethodService, PaymentMethodService>();
 
+
             return services;
         }
     }
