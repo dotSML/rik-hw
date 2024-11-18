@@ -103,7 +103,6 @@ export function AttendeesRoute() {
     data.attendeeCount = data.attendeeCount
       ? Number(data.attendeeCount)
       : undefined;
-    console.log('Data', data);
     setIsCreateAttendeeLoading(true);
     const id = await createAttendee(data);
     data.id = id;

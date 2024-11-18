@@ -39,12 +39,6 @@ export function AttendeeDetailsRoute() {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    console.log(form.errors);
-    console.log(form.isValid);
-    console.log(isSubmitting);
-  }, [form]);
-
-  useEffect(() => {
     const fetchAttendee = async () => {
       if (attendeeId) {
         const fetchedAttendee = await getAttendeeById(attendeeId);

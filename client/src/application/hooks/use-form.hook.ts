@@ -6,12 +6,12 @@ const useForm = (
     [key: string]: (value: string) => string | undefined;
   } = {}
 ) => {
-  const [values, setValues] = useState(initialValues);
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [values, setValues] = useState<Record<string, string | null>>(initialValues);
+  const [errors, setErrors] = useState<Record<string, string | undefined>>({});
   const [isTouched, setIsTouched] = useState(false);
   const [isValid, setIsValid] = useState(false);
   const [validators, setValidators] =
-    useState<Record<string, (value: string) => void>>(initialValidators);
+    useState<Record<string, (value: string) => string | undefined>>(initialValidators);
 
   useEffect(() => {
     if (isTouched) {
@@ -63,7 +63,7 @@ const useForm = (
       resetValues = true
     ) =>
     () => {
-      const newErrors: Record<string, string> = {};
+      const newErrors: Record<string, string | undefined> = {};
 
       Object.keys(validators).forEach((field) => {
         const error = validateField(field, values[field] || '');
@@ -85,7 +85,7 @@ const useForm = (
       }
     };
 
-  const handleSetValues = (data: Record<string, string>) => {
+  const handleSetValues = (data: Record<string, string | null>) => {
     setValues((prevValues) => ({ ...prevValues, ...data }));
   };
 

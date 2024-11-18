@@ -11,8 +11,8 @@ using api.Infrastructure;
 namespace api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20241114103743_SeedPaymentMethods")]
-    partial class SeedPaymentMethods
+    [Migration("20241118124306_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -22,7 +22,7 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Infrastructure.Entities.AttendeeEntity", b =>
                 {
-                    b.Property<Guid>("Id")
+                    b.Property<Guid?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
@@ -34,9 +34,6 @@ namespace api.Migrations
                         .HasMaxLength(21)
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid?>("EventEntityId")
-                        .HasColumnType("TEXT");
-
                     b.Property<Guid>("EventId")
                         .HasColumnType("TEXT");
 
@@ -44,8 +41,6 @@ namespace api.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("EventEntityId");
 
                     b.HasIndex("EventId");
 
@@ -96,21 +91,9 @@ namespace api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PaymentMethods");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("77b4e02e-c122-4630-92c5-1a00e11b02b9"),
-                            Method = "Bank transfer"
-                        },
-                        new
-                        {
-                            Id = new Guid("24bd9390-51bd-4433-937e-c1307f998ae1"),
-                            Method = "Cash"
-                        });
                 });
 
-            modelBuilder.Entity("api.Infrastructure.Entities.LegalEntityAttendeeEntity", b =>
+            modelBuilder.Entity("api.Infrastructure.Entities.LegalAttendeeEntity", b =>
                 {
                     b.HasBaseType("api.Infrastructure.Entities.AttendeeEntity");
 
@@ -153,12 +136,8 @@ namespace api.Migrations
 
             modelBuilder.Entity("api.Infrastructure.Entities.AttendeeEntity", b =>
                 {
-                    b.HasOne("api.Infrastructure.Entities.EventEntity", null)
-                        .WithMany("Attendees")
-                        .HasForeignKey("EventEntityId");
-
                     b.HasOne("api.Infrastructure.Entities.EventEntity", "Event")
-                        .WithMany()
+                        .WithMany("Attendees")
                         .HasForeignKey("EventId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

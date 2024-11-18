@@ -22,7 +22,7 @@ namespace api.Infrastructure
 
             modelBuilder.Entity<AttendeeEntity>()
                 .HasOne(a => a.Event)
-                .WithMany()
+                .WithMany(e => e.Attendees)
                 .HasForeignKey(a => a.EventId)
                 .OnDelete(DeleteBehavior.Cascade);
 
@@ -36,15 +36,15 @@ namespace api.Infrastructure
 
             modelBuilder.Entity<NaturalPersonAttendeeEntity>()
                 .Property(np => np.PersonalIdCode)
-                .IsRequired();
+                .IsRequired();                                                  
 
             modelBuilder.Entity<LegalAttendeeEntity>()
                 .Property(le => le.LegalName)
                 .IsRequired();
 
             modelBuilder.Entity<PaymentMethodEntity>().HasData(
-                new PaymentMethodEntity { Id = Guid.NewGuid(), Method = "Bank transfer" },
-                new PaymentMethodEntity { Id = Guid.NewGuid(), Method = "Cash" });
+                new PaymentMethodEntity { Id = Guid.NewGuid(), Method = "BANK_TRANSFER" },
+                new PaymentMethodEntity { Id = Guid.NewGuid(), Method = "CASH" });
         }
     }
 }

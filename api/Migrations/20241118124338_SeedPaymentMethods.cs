@@ -1,5 +1,5 @@
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 #nullable disable
 
@@ -18,8 +18,8 @@ namespace api.Migrations
                 columns: new[] { "Id", "Method" },
                 values: new object[,]
                 {
-                    { new Guid("24bd9390-51bd-4433-937e-c1307f998ae1"), "CASH" },
-                    { new Guid("77b4e02e-c122-4630-92c5-1a00e11b02b9"), "BANK_TRANSFER" }
+                    { new Guid("146457be-646c-413d-87a5-becd55d8aa0f"), "CASH" },
+                    { new Guid("596d811f-cc83-4fcb-ba57-9b5107cbe4d6"), "BANK_TRANSFER" }
                 });
         }
 
@@ -29,12 +29,12 @@ namespace api.Migrations
             migrationBuilder.DeleteData(
                 table: "PaymentMethods",
                 keyColumn: "Id",
-                keyValue: new Guid("24bd9390-51bd-4433-937e-c1307f998ae1"));
+                keyValue: new Guid("146457be-646c-413d-87a5-becd55d8aa0f"));
 
             migrationBuilder.DeleteData(
                 table: "PaymentMethods",
                 keyColumn: "Id",
-                keyValue: new Guid("77b4e02e-c122-4630-92c5-1a00e11b02b9"));
+                keyValue: new Guid("596d811f-cc83-4fcb-ba57-9b5107cbe4d6"));
         }
     }
 }

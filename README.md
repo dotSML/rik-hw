@@ -18,7 +18,7 @@ Before setting up the project, ensure you have the following installed:
 Since the project uses **SQLLite** database and monorepo structure. To start the application (api and client apps), you need to only start it from Visual Studio.
 
 ### Backend
-See [API README](src/api/README.md).
+See [API README](api/README.md).
 
 ### Frontend
-See [Client README](src/client/README.md).
+See [Client README](client/README.md).

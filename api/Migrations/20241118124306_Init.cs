@@ -1,5 +1,5 @@
+﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System;
 
 #nullable disable
 
@@ -47,7 +47,6 @@ namespace api.Migrations
                     AdditionalInfo = table.Column<string>(type: "TEXT", nullable: true),
                     PaymentMethodId = table.Column<Guid>(type: "TEXT", nullable: false),
                     AttendeeType = table.Column<string>(type: "TEXT", maxLength: 21, nullable: false),
-                    EventEntityId = table.Column<Guid>(type: "TEXT", nullable: true),
                     LegalName = table.Column<string>(type: "TEXT", nullable: true),
                     CompanyRegistrationCode = table.Column<string>(type: "TEXT", nullable: true),
                     AttendeeCount = table.Column<int>(type: "INTEGER", nullable: true),
@@ -59,11 +58,6 @@ namespace api.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Attendees", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Attendees_Events_EventEntityId",
-                        column: x => x.EventEntityId,
-                        principalTable: "Events",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Attendees_Events_EventId",
                         column: x => x.EventId,
@@ -77,11 +71,6 @@ namespace api.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Attendees_EventEntityId",
-                table: "Attendees",
-                column: "EventEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Attendees_EventId",
